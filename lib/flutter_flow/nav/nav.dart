@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '/auth/base_auth_user_provider.dart';
@@ -89,6 +90,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'HomePage',
           path: '/homePage',
           builder: (context, params) => const HomePageWidget(),
+        ),
+        FFRoute(
+          name: 'Signup_Page',
+          path: '/signupPage',
+          builder: (context, params) => const SignupPageWidget(),
+        ),
+        FFRoute(
+          name: 'StudentInfo',
+          path: '/studentInfo',
+          builder: (context, params) => const StudentInfoWidget(),
+        ),
+        FFRoute(
+          name: 'VirtualStudySpace',
+          path: '/virtualStudySpace',
+          builder: (context, params) => const VirtualStudySpaceWidget(),
+        ),
+        FFRoute(
+          name: 'UpdatePage',
+          path: '/updatePage',
+          builder: (context, params) => const UpdatePageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -275,12 +296,11 @@ class FFRoute {
           final child = appStateNotifier.loading
               ? Center(
                   child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primary,
-                      ),
+                    width: 40.0,
+                    height: 40.0,
+                    child: SpinKitFoldingCube(
+                      color: FlutterFlowTheme.of(context).primary,
+                      size: 40.0,
                     ),
                   ),
                 )
