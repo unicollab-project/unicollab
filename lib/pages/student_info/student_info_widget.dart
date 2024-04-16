@@ -308,78 +308,80 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                   },
                                 ),
                               ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 16.0),
-                              child: StreamBuilder<List<CollegeNamesRecord>>(
-                                stream: queryCollegeNamesRecord(
-                                  queryBuilder: (collegeNamesRecord) =>
-                                      collegeNamesRecord.where(
-                                    'city_ref',
-                                    isEqualTo: _model.cityNameValue,
-                                  ),
-                                ),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 40.0,
-                                        height: 40.0,
-                                        child: SpinKitFoldingCube(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          size: 40.0,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  List<CollegeNamesRecord>
-                                      collegeNameCollegeNamesRecordList =
-                                      snapshot.data!;
-                                  return FlutterFlowDropDown<String>(
-                                    controller:
-                                        _model.collegeNameValueController ??=
-                                            FormFieldController<String>(null),
-                                    options: collegeNameCollegeNamesRecordList
-                                        .map((e) => e.collegeName)
-                                        .toList(),
-                                    onChanged: (val) => setState(
-                                        () => _model.collegeNameValue = val),
-                                    width: 300.0,
-                                    height: 56.0,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyLarge
-                                        .override(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          letterSpacing: 0.0,
-                                        ),
-                                    hintText: 'Select College ...',
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
+                            if (_model.cityNameValue != null &&
+                                _model.cityNameValue != '')
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 16.0),
+                                child: StreamBuilder<List<CollegeNamesRecord>>(
+                                  stream: queryCollegeNamesRecord(
+                                    queryBuilder: (collegeNamesRecord) =>
+                                        collegeNamesRecord.where(
+                                      'city_ref',
+                                      isEqualTo: _model.cityNameValue,
                                     ),
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    elevation: 2.0,
-                                    borderColor:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    borderWidth: 2.0,
-                                    borderRadius: 8.0,
-                                    margin: const EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 4.0, 16.0, 4.0),
-                                    hidesUnderline: true,
-                                    isOverButton: true,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
-                                  );
-                                },
+                                  ),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 40.0,
+                                          height: 40.0,
+                                          child: SpinKitFoldingCube(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            size: 40.0,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    List<CollegeNamesRecord>
+                                        collegeNameCollegeNamesRecordList =
+                                        snapshot.data!;
+                                    return FlutterFlowDropDown<String>(
+                                      controller:
+                                          _model.collegeNameValueController ??=
+                                              FormFieldController<String>(null),
+                                      options: collegeNameCollegeNamesRecordList
+                                          .map((e) => e.collegeName)
+                                          .toList(),
+                                      onChanged: (val) => setState(
+                                          () => _model.collegeNameValue = val),
+                                      width: 300.0,
+                                      height: 56.0,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .bodyLarge
+                                          .override(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            letterSpacing: 0.0,
+                                          ),
+                                      hintText: 'Select College ...',
+                                      icon: Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        size: 24.0,
+                                      ),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .primaryBackground,
+                                      elevation: 2.0,
+                                      borderColor: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      borderWidth: 2.0,
+                                      borderRadius: 8.0,
+                                      margin: const EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 4.0, 16.0, 4.0),
+                                      hidesUnderline: true,
+                                      isOverButton: true,
+                                      isSearchable: false,
+                                      isMultiSelect: false,
+                                    );
+                                  },
+                                ),
                               ),
-                            ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 16.0),
@@ -562,7 +564,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                             _model.phoneNumberController.text,
                                       ));
 
-                                      context.pushNamed('HomePage');
+                                      context.goNamed('HomePage');
                                     },
                                     text: 'Sign Up',
                                     options: FFButtonOptions(
