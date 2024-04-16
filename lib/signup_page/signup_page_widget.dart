@@ -8,7 +8,6 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'signup_page_model.dart';
 export 'signup_page_model.dart';
 
@@ -389,62 +388,6 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
                                       .asValidator(context),
                                 ),
                               ),
-                            ),
-                            StreamBuilder<List<UsersRecord>>(
-                              stream: queryUsersRecord(),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 40.0,
-                                      height: 40.0,
-                                      child: SpinKitFoldingCube(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        size: 40.0,
-                                      ),
-                                    ),
-                                  );
-                                }
-                                List<UsersRecord>
-                                    conditionalBuilderUsersRecordList =
-                                    snapshot.data!;
-                                return Builder(
-                                  builder: (context) {
-                                    if (conditionalBuilderUsersRecord.email !=
-                                        _model.emailAddressController.text) {
-                                      return Container(
-                                        width: 1.0,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                        ),
-                                      );
-                                    } else {
-                                      return Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Text(
-                                            'Email is already in use.',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily:
-                                                      'Plus Jakarta Sans',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  fontSize: 13.0,
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ],
-                                      );
-                                    }
-                                  },
-                                );
-                              },
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
