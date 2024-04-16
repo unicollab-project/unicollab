@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -6,6 +8,7 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'signup_page_model.dart';
 export 'signup_page_model.dart';
 
@@ -387,6 +390,62 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
                                 ),
                               ),
                             ),
+                            StreamBuilder<List<UsersRecord>>(
+                              stream: queryUsersRecord(),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 40.0,
+                                      height: 40.0,
+                                      child: SpinKitFoldingCube(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 40.0,
+                                      ),
+                                    ),
+                                  );
+                                }
+                                List<UsersRecord>
+                                    conditionalBuilderUsersRecordList =
+                                    snapshot.data!;
+                                return Builder(
+                                  builder: (context) {
+                                    if (conditionalBuilderUsersRecord.email !=
+                                        _model.emailAddressController.text) {
+                                      return Container(
+                                        width: 1.0,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                        ),
+                                      );
+                                    } else {
+                                      return Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            'Email is already in use.',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily:
+                                                      'Plus Jakarta Sans',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .error,
+                                                  fontSize: 13.0,
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ],
+                                      );
+                                    }
+                                  },
+                                );
+                              },
+                            ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 16.0),
@@ -629,7 +688,40 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
                                   0.0, 0.0, 0.0, 16.0),
                               child: FFButtonWidget(
                                 onPressed: () async {
-                                  context.pushNamed('StudentInfo');
+                                  GoRouter.of(context).prepareAuthEvent();
+                                  if (_model.passwordController.text !=
+                                      _model.confirmPasswordController.text) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                          'Passwords don\'t match!',
+                                        ),
+                                      ),
+                                    );
+                                    return;
+                                  }
+
+                                  final user =
+                                      await authManager.createAccountWithEmail(
+                                    context,
+                                    _model.emailAddressController.text,
+                                    _model.passwordController.text,
+                                  );
+                                  if (user == null) {
+                                    return;
+                                  }
+
+                                  await UsersRecord.collection
+                                      .doc(user.uid)
+                                      .update(createUsersRecordData(
+                                        displayName:
+                                            _model.firstNameController.text,
+                                        lastName:
+                                            _model.lastNameController.text,
+                                      ));
+
+                                  context.pushNamedAuth(
+                                      'StudentInfo', context.mounted);
                                 },
                                 text: 'Fill details',
                                 options: FFButtonOptions(

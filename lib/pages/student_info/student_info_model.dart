@@ -8,14 +8,17 @@ class StudentInfoModel extends FlutterFlowModel<StudentInfoWidget> {
 
   final unfocusNode = FocusNode();
   // State field(s) for stateName widget.
-  String? stateNameValue1;
-  FormFieldController<String>? stateNameValueController1;
+  String? stateNameValue;
+  FormFieldController<String>? stateNameValueController;
   // State field(s) for cityName widget.
   String? cityNameValue;
   FormFieldController<String>? cityNameValueController;
-  // State field(s) for stateName widget.
-  String? stateNameValue2;
-  FormFieldController<String>? stateNameValueController2;
+  // State field(s) for collegeName widget.
+  String? collegeNameValue;
+  FormFieldController<String>? collegeNameValueController;
+  // State field(s) for branchName widget.
+  String? branchNameValue;
+  FormFieldController<String>? branchNameValueController;
   // State field(s) for phoneNumber widget.
   FocusNode? phoneNumberFocusNode;
   TextEditingController? phoneNumberController;

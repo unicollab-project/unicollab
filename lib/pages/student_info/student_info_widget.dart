@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -192,13 +193,13 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                       snapshot.data!;
                                   return FlutterFlowDropDown<String>(
                                     controller:
-                                        _model.stateNameValueController1 ??=
+                                        _model.stateNameValueController ??=
                                             FormFieldController<String>(null),
                                     options: stateNameStatesRecordList
                                         .map((e) => e.stateRef)
                                         .toList(),
                                     onChanged: (val) => setState(
-                                        () => _model.stateNameValue1 = val),
+                                        () => _model.stateNameValue = val),
                                     width: 300.0,
                                     height: 56.0,
                                     textStyle: FlutterFlowTheme.of(context)
@@ -233,8 +234,8 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                 },
                               ),
                             ),
-                            if (_model.stateNameValue1 != null &&
-                                _model.stateNameValue1 != '')
+                            if (_model.stateNameValue != null &&
+                                _model.stateNameValue != '')
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 16.0),
@@ -243,7 +244,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                     queryBuilder: (citiesRecord) =>
                                         citiesRecord.where(
                                       'state_ref',
-                                      isEqualTo: _model.stateNameValue1,
+                                      isEqualTo: _model.stateNameValue,
                                     ),
                                   ),
                                   builder: (context, snapshot) {
@@ -310,6 +311,78 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 16.0),
+                              child: StreamBuilder<List<CollegeNamesRecord>>(
+                                stream: queryCollegeNamesRecord(
+                                  queryBuilder: (collegeNamesRecord) =>
+                                      collegeNamesRecord.where(
+                                    'city_ref',
+                                    isEqualTo: _model.cityNameValue,
+                                  ),
+                                ),
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 40.0,
+                                        height: 40.0,
+                                        child: SpinKitFoldingCube(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          size: 40.0,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  List<CollegeNamesRecord>
+                                      collegeNameCollegeNamesRecordList =
+                                      snapshot.data!;
+                                  return FlutterFlowDropDown<String>(
+                                    controller:
+                                        _model.collegeNameValueController ??=
+                                            FormFieldController<String>(null),
+                                    options: collegeNameCollegeNamesRecordList
+                                        .map((e) => e.collegeName)
+                                        .toList(),
+                                    onChanged: (val) => setState(
+                                        () => _model.collegeNameValue = val),
+                                    width: 300.0,
+                                    height: 56.0,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .override(
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    hintText: 'Select College ...',
+                                    icon: Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      size: 24.0,
+                                    ),
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                    elevation: 2.0,
+                                    borderColor:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    borderWidth: 2.0,
+                                    borderRadius: 8.0,
+                                    margin: const EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 4.0, 16.0, 4.0),
+                                    hidesUnderline: true,
+                                    isOverButton: true,
+                                    isSearchable: false,
+                                    isMultiSelect: false,
+                                  );
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 16.0),
                               child: StreamBuilder<List<BranchRecord>>(
                                 stream: queryBranchRecord(),
                                 builder: (context, snapshot) {
@@ -327,17 +400,18 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                       ),
                                     );
                                   }
-                                  List<BranchRecord> stateNameBranchRecordList =
+                                  List<BranchRecord>
+                                      branchNameBranchRecordList =
                                       snapshot.data!;
                                   return FlutterFlowDropDown<String>(
                                     controller:
-                                        _model.stateNameValueController2 ??=
+                                        _model.branchNameValueController ??=
                                             FormFieldController<String>(null),
-                                    options: stateNameBranchRecordList
+                                    options: branchNameBranchRecordList
                                         .map((e) => e.branchName)
                                         .toList(),
                                     onChanged: (val) => setState(
-                                        () => _model.stateNameValue2 = val),
+                                        () => _model.branchNameValue = val),
                                     width: 300.0,
                                     height: 56.0,
                                     textStyle: FlutterFlowTheme.of(context)
@@ -457,33 +531,66 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 16.0),
-                              child: FFButtonWidget(
-                                onPressed: () {
-                                  print('Button pressed ...');
-                                },
-                                text: 'Sign Up',
-                                options: FFButtonOptions(
-                                  width: double.infinity,
-                                  height: 44.0,
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        fontFamily: 'Plus Jakarta Sans',
-                                        color: Colors.white,
-                                        letterSpacing: 0.0,
+                              child: StreamBuilder<UsersRecord>(
+                                stream: UsersRecord.getDocument(
+                                    currentUserReference!),
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 40.0,
+                                        height: 40.0,
+                                        child: SpinKitFoldingCube(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          size: 40.0,
+                                        ),
                                       ),
-                                  elevation: 3.0,
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
+                                    );
+                                  }
+                                  final buttonUsersRecord = snapshot.data!;
+                                  return FFButtonWidget(
+                                    onPressed: () async {
+                                      await buttonUsersRecord.reference
+                                          .update(createUsersRecordData(
+                                        collegeState: _model.stateNameValue,
+                                        collegeCity: _model.cityNameValue,
+                                        collegeName: _model.collegeNameValue,
+                                        branchName: _model.branchNameValue,
+                                        phoneNumber:
+                                            _model.phoneNumberController.text,
+                                      ));
+
+                                      context.pushNamed('HomePage');
+                                    },
+                                    text: 'Sign Up',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 44.0,
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 0.0),
+                                      iconPadding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: Colors.white,
+                                            letterSpacing: 0.0,
+                                          ),
+                                      elevation: 3.0,
+                                      borderSide: const BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ],

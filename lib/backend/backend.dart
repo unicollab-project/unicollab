@@ -10,6 +10,7 @@ import 'schema/todo_record.dart';
 import 'schema/states_record.dart';
 import 'schema/cities_record.dart';
 import 'schema/branch_record.dart';
+import 'schema/college_names_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,6 +23,7 @@ export 'schema/todo_record.dart';
 export 'schema/states_record.dart';
 export 'schema/cities_record.dart';
 export 'schema/branch_record.dart';
+export 'schema/college_names_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -203,6 +205,43 @@ Future<List<BranchRecord>> queryBranchRecordOnce({
     queryCollectionOnce(
       BranchRecord.collection,
       BranchRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query CollegeNamesRecords (as a Stream and as a Future).
+Future<int> queryCollegeNamesRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      CollegeNamesRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<CollegeNamesRecord>> queryCollegeNamesRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      CollegeNamesRecord.collection,
+      CollegeNamesRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<CollegeNamesRecord>> queryCollegeNamesRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      CollegeNamesRecord.collection,
+      CollegeNamesRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
