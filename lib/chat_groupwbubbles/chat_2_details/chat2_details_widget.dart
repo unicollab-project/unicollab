@@ -420,7 +420,10 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Group Chat',
+                                valueOrDefault<String>(
+                                  widget.chatRef?.name,
+                                  'College Group',
+                                ),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyLarge
                                     .override(
