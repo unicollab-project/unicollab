@@ -566,6 +566,8 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                         branchName: _model.branchNameValue,
                                         phoneNumber: _model
                                             .phoneNumberTextController.text,
+                                        photoUrl:
+                                            'gs://unicollab-f6e1e.appspot.com/up.png',
                                       ));
 
                                       context.pushNamed('chat_2_main');

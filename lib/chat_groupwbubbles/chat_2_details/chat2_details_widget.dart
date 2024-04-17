@@ -11,6 +11,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 import 'chat2_details_model.dart';
 export 'chat2_details_model.dart';
 
@@ -64,6 +65,8 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -421,7 +424,7 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
                             children: [
                               Text(
                                 valueOrDefault<String>(
-                                  widget.chatRef?.name,
+                                  FFAppState().chats?.id,
                                   'College Group',
                                 ),
                                 style: FlutterFlowTheme.of(context)
