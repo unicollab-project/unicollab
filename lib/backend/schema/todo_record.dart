@@ -25,9 +25,15 @@ class TodoRecord extends FirestoreRecord {
   DateTime? get taskDeadline => _taskDeadline;
   bool hasTaskDeadline() => _taskDeadline != null;
 
+  // "user_created" field.
+  DocumentReference? _userCreated;
+  DocumentReference? get userCreated => _userCreated;
+  bool hasUserCreated() => _userCreated != null;
+
   void _initializeFields() {
     _taskName = snapshotData['task_name'] as String?;
     _taskDeadline = snapshotData['task_deadline'] as DateTime?;
+    _userCreated = snapshotData['user_created'] as DocumentReference?;
   }
 
   static CollectionReference get collection =>
@@ -66,11 +72,13 @@ class TodoRecord extends FirestoreRecord {
 Map<String, dynamic> createTodoRecordData({
   String? taskName,
   DateTime? taskDeadline,
+  DocumentReference? userCreated,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'task_name': taskName,
       'task_deadline': taskDeadline,
+      'user_created': userCreated,
     }.withoutNulls,
   );
 
@@ -82,12 +90,14 @@ class TodoRecordDocumentEquality implements Equality<TodoRecord> {
 
   @override
   bool equals(TodoRecord? e1, TodoRecord? e2) {
-    return e1?.taskName == e2?.taskName && e1?.taskDeadline == e2?.taskDeadline;
+    return e1?.taskName == e2?.taskName &&
+        e1?.taskDeadline == e2?.taskDeadline &&
+        e1?.userCreated == e2?.userCreated;
   }
 
   @override
   int hash(TodoRecord? e) =>
-      const ListEquality().hash([e?.taskName, e?.taskDeadline]);
+      const ListEquality().hash([e?.taskName, e?.taskDeadline, e?.userCreated]);
 
   @override
   bool isValidKey(Object? o) => o is TodoRecord;

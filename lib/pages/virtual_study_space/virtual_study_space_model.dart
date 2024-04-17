@@ -6,6 +6,10 @@ class VirtualStudySpaceModel extends FlutterFlowModel<VirtualStudySpaceWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  // State field(s) for todoItem widget.
+  FocusNode? todoItemFocusNode;
+  TextEditingController? todoItemTextController;
+  String? Function(BuildContext, String?)? todoItemTextControllerValidator;
 
   @override
   void initState(BuildContext context) {}
@@ -13,5 +17,7 @@ class VirtualStudySpaceModel extends FlutterFlowModel<VirtualStudySpaceWidget> {
   @override
   void dispose() {
     unfocusNode.dispose();
+    todoItemFocusNode?.dispose();
+    todoItemTextController?.dispose();
   }
 }

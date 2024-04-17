@@ -778,7 +778,8 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
                                                                             12.0,
                                                                             0.0),
                                                                 child: Text(
-                                                                  'Group Chat',
+                                                                  rowUsersRecord
+                                                                      .collegeName,
                                                                   textAlign:
                                                                       TextAlign
                                                                           .start,
