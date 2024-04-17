@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import '/backend/backend.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
@@ -73,26 +73,21 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const HomePageWidget() : const LoginPageWidget(),
+          appStateNotifier.loggedIn ? const Chat2MainWidget() : const LoginPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const HomePageWidget() : const LoginPageWidget(),
+              appStateNotifier.loggedIn ? const Chat2MainWidget() : const LoginPageWidget(),
         ),
         FFRoute(
-          name: 'Login_Page',
+          name: 'LoginPage',
           path: '/loginPage',
           builder: (context, params) => const LoginPageWidget(),
         ),
         FFRoute(
-          name: 'HomePage',
-          path: '/homePage',
-          builder: (context, params) => const HomePageWidget(),
-        ),
-        FFRoute(
-          name: 'Signup_Page',
+          name: 'SignupPage',
           path: '/signupPage',
           builder: (context, params) => const SignupPageWidget(),
         ),
@@ -110,8 +105,54 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'UpdatePage',
           path: '/updatePage',
           builder: (context, params) => const UpdatePageWidget(),
+        ),
+        FFRoute(
+          name: 'chat_2_Details',
+          path: '/chat2Details',
+          asyncParams: {
+            'chatRef': getDoc(['chats'], ChatsRecord.fromSnapshot),
+          },
+          builder: (context, params) => Chat2DetailsWidget(
+            chatRef: params.getParam(
+              'chatRef',
+              ParamType.Document,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'chat_2_main',
+          path: '/chat2Main',
+          builder: (context, params) => const Chat2MainWidget(),
+        ),
+        FFRoute(
+          name: 'chat_2_InviteUsers',
+          path: '/chat2InviteUsers',
+          asyncParams: {
+            'chatRef': getDoc(['chats'], ChatsRecord.fromSnapshot),
+          },
+          builder: (context, params) => Chat2InviteUsersWidget(
+            chatRef: params.getParam(
+              'chatRef',
+              ParamType.Document,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'image_Details',
+          path: '/imageDetails',
+          asyncParams: {
+            'chatMessage':
+                getDoc(['chat_messages'], ChatMessagesRecord.fromSnapshot),
+          },
+          builder: (context, params) => ImageDetailsWidget(
+            chatMessage: params.getParam(
+              'chatMessage',
+              ParamType.Document,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
+      observers: [routeObserver],
     );
 
 extension NavParamExtensions on Map<String, String?> {
@@ -186,7 +227,7 @@ extension _GoRouterStateExtensions on GoRouterState {
       extra != null ? extra as Map<String, dynamic> : {};
   Map<String, dynamic> get allParams => <String, dynamic>{}
     ..addAll(pathParameters)
-    ..addAll(queryParameters)
+    ..addAll(uri.queryParameters)
     ..addAll(extraMap);
   TransitionInfo get transitionInfo => extraMap.containsKey(kTransitionInfoKey)
       ? extraMap[kTransitionInfoKey] as TransitionInfo
@@ -279,7 +320,7 @@ class FFRoute {
           }
 
           if (requireAuth && !appStateNotifier.loggedIn) {
-            appStateNotifier.setRedirectLocationIfUnset(state.location);
+            appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
             return '/loginPage';
           }
           return null;
@@ -294,14 +335,11 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 40.0,
-                    height: 40.0,
-                    child: SpinKitFoldingCube(
-                      color: FlutterFlowTheme.of(context).primary,
-                      size: 40.0,
-                    ),
+              ? Container(
+                  color: FlutterFlowTheme.of(context).tertiary,
+                  child: Image.asset(
+                    'assets/images/unicollab-high-resolution-logo-black-transparent.png',
+                    fit: BoxFit.contain,
                   ),
                 )
               : page;
@@ -357,7 +395,7 @@ class RootPageContext {
   static bool isInactiveRootPage(BuildContext context) {
     final rootPageContext = context.read<RootPageContext?>();
     final isRootPage = rootPageContext?.isRootPage ?? false;
-    final location = GoRouter.of(context).location;
+    final location = GoRouterState.of(context).uri.toString();
     return isRootPage &&
         location != '/' &&
         location != rootPageContext?.errorRoute;

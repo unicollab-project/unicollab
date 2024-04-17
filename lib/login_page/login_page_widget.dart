@@ -23,53 +23,57 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final animationsMap = {
-    'containerOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 1.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 300.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 300.ms,
-          begin: const Offset(0.0, 140.0),
-          end: const Offset(0.0, 0.0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 300.ms,
-          begin: const Offset(0.9, 0.9),
-          end: const Offset(1.0, 1.0),
-        ),
-        TiltEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 300.ms,
-          begin: const Offset(-0.349, 0),
-          end: const Offset(0, 0),
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => LoginPageModel());
 
-    _model.emailAddressController ??= TextEditingController();
+    _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
 
-    _model.passwordController ??= TextEditingController();
+    _model.passwordTextController ??= TextEditingController();
     _model.passwordFocusNode ??= FocusNode();
+
+    animationsMap.addAll({
+      'containerOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 1.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 300.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.0, 140.0),
+            end: const Offset(0.0, 0.0),
+          ),
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.9, 0.9),
+            end: const Offset(1.0, 1.0),
+          ),
+          TiltEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(-0.349, 0),
+            end: const Offset(0, 0),
+          ),
+        ],
+      ),
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -185,7 +189,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.emailAddressController,
+                                  controller: _model.emailAddressTextController,
                                   focusNode: _model.emailAddressFocusNode,
                                   autofocus: true,
                                   autofillHints: const [AutofillHints.email],
@@ -242,7 +246,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                                       ),
                                   keyboardType: TextInputType.emailAddress,
                                   validator: _model
-                                      .emailAddressControllerValidator
+                                      .emailAddressTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -253,7 +257,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.passwordController,
+                                  controller: _model.passwordTextController,
                                   focusNode: _model.passwordFocusNode,
                                   autofocus: true,
                                   autofillHints: const [AutofillHints.password],
@@ -323,7 +327,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                                         fontFamily: 'Plus Jakarta Sans',
                                         letterSpacing: 0.0,
                                       ),
-                                  validator: _model.passwordControllerValidator
+                                  validator: _model
+                                      .passwordTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -338,15 +343,15 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                                   final user =
                                       await authManager.signInWithEmail(
                                     context,
-                                    _model.emailAddressController.text,
-                                    _model.passwordController.text,
+                                    _model.emailAddressTextController.text,
+                                    _model.passwordTextController.text,
                                   );
                                   if (user == null) {
                                     return;
                                   }
 
-                                  context.goNamedAuth(
-                                      'HomePage', context.mounted);
+                                  context.pushNamedAuth(
+                                      'chat_2_main', context.mounted);
                                 },
                                 text: 'Log In',
                                 options: FFButtonOptions(
@@ -399,8 +404,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                                     return;
                                   }
 
-                                  context.goNamedAuth(
-                                      'HomePage', context.mounted);
+                                  context.pushNamedAuth(
+                                      'chat_2_main', context.mounted);
                                 },
                                 text: 'Continue with Google',
                                 icon: const FaIcon(
@@ -447,7 +452,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  context.pushNamed('Signup_Page');
+                                  context.pushNamed('SignupPage');
                                 },
                                 child: RichText(
                                   textScaler: MediaQuery.of(context).textScaler,
@@ -472,7 +477,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                                         mouseCursor: SystemMouseCursors.click,
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () async {
-                                            context.goNamed('Signup_Page');
+                                            context.goNamed('SignupPage');
                                           },
                                       )
                                     ],

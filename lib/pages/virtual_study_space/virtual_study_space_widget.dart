@@ -21,6 +21,8 @@ class _VirtualStudySpaceWidgetState extends State<VirtualStudySpaceWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => VirtualStudySpaceModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

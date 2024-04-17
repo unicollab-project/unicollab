@@ -12,16 +12,16 @@ class UpdatePageModel extends FlutterFlowModel<UpdatePageWidget> {
 
   // State field(s) for firstName widget.
   FocusNode? firstNameFocusNode;
-  TextEditingController? firstNameController;
-  String? Function(BuildContext, String?)? firstNameControllerValidator;
+  TextEditingController? firstNameTextController;
+  String? Function(BuildContext, String?)? firstNameTextControllerValidator;
   // State field(s) for lastName widget.
   FocusNode? lastNameFocusNode;
-  TextEditingController? lastNameController;
-  String? Function(BuildContext, String?)? lastNameControllerValidator;
+  TextEditingController? lastNameTextController;
+  String? Function(BuildContext, String?)? lastNameTextControllerValidator;
   // State field(s) for phoneNumber widget.
   FocusNode? phoneNumberFocusNode;
-  TextEditingController? phoneNumberController;
-  String? Function(BuildContext, String?)? phoneNumberControllerValidator;
+  TextEditingController? phoneNumberTextController;
+  String? Function(BuildContext, String?)? phoneNumberTextControllerValidator;
 
   @override
   void initState(BuildContext context) {}
@@ -29,12 +29,12 @@ class UpdatePageModel extends FlutterFlowModel<UpdatePageWidget> {
   @override
   void dispose() {
     firstNameFocusNode?.dispose();
-    firstNameController?.dispose();
+    firstNameTextController?.dispose();
 
     lastNameFocusNode?.dispose();
-    lastNameController?.dispose();
+    lastNameTextController?.dispose();
 
     phoneNumberFocusNode?.dispose();
-    phoneNumberController?.dispose();
+    phoneNumberTextController?.dispose();
   }
 }

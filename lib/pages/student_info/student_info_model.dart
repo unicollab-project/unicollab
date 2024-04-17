@@ -21,8 +21,8 @@ class StudentInfoModel extends FlutterFlowModel<StudentInfoWidget> {
   FormFieldController<String>? branchNameValueController;
   // State field(s) for phoneNumber widget.
   FocusNode? phoneNumberFocusNode;
-  TextEditingController? phoneNumberController;
-  String? Function(BuildContext, String?)? phoneNumberControllerValidator;
+  TextEditingController? phoneNumberTextController;
+  String? Function(BuildContext, String?)? phoneNumberTextControllerValidator;
 
   @override
   void initState(BuildContext context) {}
@@ -31,6 +31,6 @@ class StudentInfoModel extends FlutterFlowModel<StudentInfoWidget> {
   void dispose() {
     unfocusNode.dispose();
     phoneNumberFocusNode?.dispose();
-    phoneNumberController?.dispose();
+    phoneNumberTextController?.dispose();
   }
 }

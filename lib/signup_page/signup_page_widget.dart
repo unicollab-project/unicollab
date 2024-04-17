@@ -24,62 +24,66 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final animationsMap = {
-    'containerOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 1.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 300.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 300.ms,
-          begin: const Offset(0.0, 140.0),
-          end: const Offset(0.0, 0.0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 300.ms,
-          begin: const Offset(0.9, 0.9),
-          end: const Offset(1.0, 1.0),
-        ),
-        TiltEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 300.ms,
-          begin: const Offset(-0.349, 0),
-          end: const Offset(0, 0),
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => SignupPageModel());
 
-    _model.firstNameController ??= TextEditingController();
+    _model.firstNameTextController ??= TextEditingController();
     _model.firstNameFocusNode ??= FocusNode();
 
-    _model.lastNameController ??= TextEditingController();
+    _model.lastNameTextController ??= TextEditingController();
     _model.lastNameFocusNode ??= FocusNode();
 
-    _model.emailAddressController ??= TextEditingController();
+    _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
 
-    _model.passwordController ??= TextEditingController();
+    _model.passwordTextController ??= TextEditingController();
     _model.passwordFocusNode ??= FocusNode();
 
-    _model.confirmPasswordController ??= TextEditingController();
+    _model.confirmPasswordTextController ??= TextEditingController();
     _model.confirmPasswordFocusNode ??= FocusNode();
+
+    animationsMap.addAll({
+      'containerOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 1.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 300.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.0, 140.0),
+            end: const Offset(0.0, 0.0),
+          ),
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.9, 0.9),
+            end: const Offset(1.0, 1.0),
+          ),
+          TiltEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(-0.349, 0),
+            end: const Offset(0, 0),
+          ),
+        ],
+      ),
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -195,7 +199,7 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.firstNameController,
+                                  controller: _model.firstNameTextController,
                                   focusNode: _model.firstNameFocusNode,
                                   autofocus: true,
                                   autofillHints: const [AutofillHints.email],
@@ -250,7 +254,8 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
                                         fontFamily: 'Plus Jakarta Sans',
                                         letterSpacing: 0.0,
                                       ),
-                                  validator: _model.firstNameControllerValidator
+                                  validator: _model
+                                      .firstNameTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -261,7 +266,7 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.lastNameController,
+                                  controller: _model.lastNameTextController,
                                   focusNode: _model.lastNameFocusNode,
                                   autofocus: true,
                                   autofillHints: const [AutofillHints.email],
@@ -316,7 +321,8 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
                                         fontFamily: 'Plus Jakarta Sans',
                                         letterSpacing: 0.0,
                                       ),
-                                  validator: _model.lastNameControllerValidator
+                                  validator: _model
+                                      .lastNameTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -327,7 +333,7 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.emailAddressController,
+                                  controller: _model.emailAddressTextController,
                                   focusNode: _model.emailAddressFocusNode,
                                   autofocus: true,
                                   autofillHints: const [AutofillHints.email],
@@ -384,7 +390,7 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
                                       ),
                                   keyboardType: TextInputType.emailAddress,
                                   validator: _model
-                                      .emailAddressControllerValidator
+                                      .emailAddressTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -395,7 +401,7 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.passwordController,
+                                  controller: _model.passwordTextController,
                                   focusNode: _model.passwordFocusNode,
                                   autofocus: true,
                                   autofillHints: const [AutofillHints.password],
@@ -469,7 +475,8 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
                                   maxLengthEnforcement:
                                       MaxLengthEnforcement.enforced,
                                   keyboardType: TextInputType.visiblePassword,
-                                  validator: _model.passwordControllerValidator
+                                  validator: _model
+                                      .passwordTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -480,15 +487,16 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.confirmPasswordController,
+                                  controller:
+                                      _model.confirmPasswordTextController,
                                   focusNode: _model.confirmPasswordFocusNode,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.confirmPasswordController',
+                                    '_model.confirmPasswordTextController',
                                     const Duration(milliseconds: 300),
                                     () async {
-                                      if (_model.passwordController.text ==
-                                          _model
-                                              .confirmPasswordController.text) {
+                                      if (_model.passwordTextController.text ==
+                                          _model.confirmPasswordTextController
+                                              .text) {
                                         setState(() {
                                           _model.passwordMatch = true;
                                         });
@@ -578,7 +586,7 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
                                       ),
                                   keyboardType: TextInputType.visiblePassword,
                                   validator: _model
-                                      .confirmPasswordControllerValidator
+                                      .confirmPasswordTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -632,8 +640,9 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   GoRouter.of(context).prepareAuthEvent();
-                                  if (_model.passwordController.text !=
-                                      _model.confirmPasswordController.text) {
+                                  if (_model.passwordTextController.text !=
+                                      _model
+                                          .confirmPasswordTextController.text) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                         content: Text(
@@ -647,8 +656,8 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
                                   final user =
                                       await authManager.createAccountWithEmail(
                                     context,
-                                    _model.emailAddressController.text,
-                                    _model.passwordController.text,
+                                    _model.emailAddressTextController.text,
+                                    _model.passwordTextController.text,
                                   );
                                   if (user == null) {
                                     return;
@@ -658,9 +667,9 @@ class _SignupPageWidgetState extends State<SignupPageWidget>
                                       .doc(user.uid)
                                       .update(createUsersRecordData(
                                         displayName:
-                                            _model.firstNameController.text,
+                                            _model.firstNameTextController.text,
                                         lastName:
-                                            _model.lastNameController.text,
+                                            _model.lastNameTextController.text,
                                       ));
 
                                   context.pushNamedAuth(

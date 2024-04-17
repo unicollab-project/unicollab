@@ -28,14 +28,16 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
     super.initState();
     _model = createModel(context, () => UpdatePageModel());
 
-    _model.firstNameController ??= TextEditingController();
+    _model.firstNameTextController ??= TextEditingController();
     _model.firstNameFocusNode ??= FocusNode();
 
-    _model.lastNameController ??= TextEditingController();
+    _model.lastNameTextController ??= TextEditingController();
     _model.lastNameFocusNode ??= FocusNode();
 
-    _model.phoneNumberController ??= TextEditingController();
+    _model.phoneNumberTextController ??= TextEditingController();
     _model.phoneNumberFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -170,8 +172,8 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
-                                child: Image.asset(
-                                  'assets/images/up.png',
+                                child: Image.network(
+                                  '',
                                   width: 80.0,
                                   height: 80.0,
                                   fit: BoxFit.cover,
@@ -248,7 +250,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.firstNameController,
+                                  controller: _model.firstNameTextController,
                                   focusNode: _model.firstNameFocusNode,
                                   autofocus: true,
                                   autofillHints: const [AutofillHints.name],
@@ -311,7 +313,8 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                                           required isFocused,
                                           maxLength}) =>
                                       null,
-                                  validator: _model.firstNameControllerValidator
+                                  validator: _model
+                                      .firstNameTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -334,7 +337,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.lastNameController,
+                                  controller: _model.lastNameTextController,
                                   focusNode: _model.lastNameFocusNode,
                                   autofocus: true,
                                   autofillHints: const [AutofillHints.email],
@@ -389,7 +392,8 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                                         fontFamily: 'Plus Jakarta Sans',
                                         letterSpacing: 0.0,
                                       ),
-                                  validator: _model.lastNameControllerValidator
+                                  validator: _model
+                                      .lastNameTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -412,7 +416,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.phoneNumberController,
+                                  controller: _model.phoneNumberTextController,
                                   focusNode: _model.phoneNumberFocusNode,
                                   autofocus: true,
                                   autofillHints: const [
@@ -479,7 +483,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                                       null,
                                   keyboardType: TextInputType.phone,
                                   validator: _model
-                                      .phoneNumberControllerValidator
+                                      .phoneNumberTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -514,9 +518,9 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                       onPressed: () async {
                         await buttonUsersRecord.reference
                             .update(createUsersRecordData(
-                          displayName: _model.firstNameController.text,
-                          lastName: _model.lastNameController.text,
-                          phoneNumber: _model.phoneNumberController.text,
+                          displayName: _model.firstNameTextController.text,
+                          lastName: _model.lastNameTextController.text,
+                          phoneNumber: _model.phoneNumberTextController.text,
                         ));
                       },
                       text: 'Update Profile',
@@ -553,7 +557,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                     await authManager.signOut();
                     GoRouter.of(context).clearRedirectLocation();
 
-                    context.goNamedAuth('Login_Page', context.mounted);
+                    context.goNamedAuth('LoginPage', context.mounted);
                   },
                   text: 'Log Out',
                   options: FFButtonOptions(

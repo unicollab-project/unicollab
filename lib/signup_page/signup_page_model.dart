@@ -12,26 +12,27 @@ class SignupPageModel extends FlutterFlowModel<SignupPageWidget> {
   final unfocusNode = FocusNode();
   // State field(s) for firstName widget.
   FocusNode? firstNameFocusNode;
-  TextEditingController? firstNameController;
-  String? Function(BuildContext, String?)? firstNameControllerValidator;
+  TextEditingController? firstNameTextController;
+  String? Function(BuildContext, String?)? firstNameTextControllerValidator;
   // State field(s) for lastName widget.
   FocusNode? lastNameFocusNode;
-  TextEditingController? lastNameController;
-  String? Function(BuildContext, String?)? lastNameControllerValidator;
+  TextEditingController? lastNameTextController;
+  String? Function(BuildContext, String?)? lastNameTextControllerValidator;
   // State field(s) for emailAddress widget.
   FocusNode? emailAddressFocusNode;
-  TextEditingController? emailAddressController;
-  String? Function(BuildContext, String?)? emailAddressControllerValidator;
+  TextEditingController? emailAddressTextController;
+  String? Function(BuildContext, String?)? emailAddressTextControllerValidator;
   // State field(s) for password widget.
   FocusNode? passwordFocusNode;
-  TextEditingController? passwordController;
+  TextEditingController? passwordTextController;
   late bool passwordVisibility;
-  String? Function(BuildContext, String?)? passwordControllerValidator;
+  String? Function(BuildContext, String?)? passwordTextControllerValidator;
   // State field(s) for confirmPassword widget.
   FocusNode? confirmPasswordFocusNode;
-  TextEditingController? confirmPasswordController;
+  TextEditingController? confirmPasswordTextController;
   late bool confirmPasswordVisibility;
-  String? Function(BuildContext, String?)? confirmPasswordControllerValidator;
+  String? Function(BuildContext, String?)?
+      confirmPasswordTextControllerValidator;
 
   @override
   void initState(BuildContext context) {
@@ -43,18 +44,18 @@ class SignupPageModel extends FlutterFlowModel<SignupPageWidget> {
   void dispose() {
     unfocusNode.dispose();
     firstNameFocusNode?.dispose();
-    firstNameController?.dispose();
+    firstNameTextController?.dispose();
 
     lastNameFocusNode?.dispose();
-    lastNameController?.dispose();
+    lastNameTextController?.dispose();
 
     emailAddressFocusNode?.dispose();
-    emailAddressController?.dispose();
+    emailAddressTextController?.dispose();
 
     passwordFocusNode?.dispose();
-    passwordController?.dispose();
+    passwordTextController?.dispose();
 
     confirmPasswordFocusNode?.dispose();
-    confirmPasswordController?.dispose();
+    confirmPasswordTextController?.dispose();
   }
 }

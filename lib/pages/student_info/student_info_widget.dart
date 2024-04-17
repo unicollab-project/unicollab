@@ -26,50 +26,54 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final animationsMap = {
-    'containerOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 1.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 300.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 300.ms,
-          begin: const Offset(0.0, 140.0),
-          end: const Offset(0.0, 0.0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 300.ms,
-          begin: const Offset(0.9, 0.9),
-          end: const Offset(1.0, 1.0),
-        ),
-        TiltEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 300.ms,
-          begin: const Offset(-0.349, 0),
-          end: const Offset(0, 0),
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => StudentInfoModel());
 
-    _model.phoneNumberController ??= TextEditingController();
+    _model.phoneNumberTextController ??= TextEditingController();
     _model.phoneNumberFocusNode ??= FocusNode();
+
+    animationsMap.addAll({
+      'containerOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 1.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 300.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.0, 140.0),
+            end: const Offset(0.0, 0.0),
+          ),
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.9, 0.9),
+            end: const Offset(1.0, 1.0),
+          ),
+          TiltEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(-0.349, 0),
+            end: const Offset(0, 0),
+          ),
+        ],
+      ),
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -454,7 +458,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.phoneNumberController,
+                                  controller: _model.phoneNumberTextController,
                                   focusNode: _model.phoneNumberFocusNode,
                                   autofocus: true,
                                   autofillHints: const [
@@ -525,7 +529,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                       null,
                                   keyboardType: TextInputType.emailAddress,
                                   validator: _model
-                                      .phoneNumberControllerValidator
+                                      .phoneNumberTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -560,11 +564,11 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                         collegeCity: _model.cityNameValue,
                                         collegeName: _model.collegeNameValue,
                                         branchName: _model.branchNameValue,
-                                        phoneNumber:
-                                            _model.phoneNumberController.text,
+                                        phoneNumber: _model
+                                            .phoneNumberTextController.text,
                                       ));
 
-                                      context.goNamed('HomePage');
+                                      context.pushNamed('chat_2_main');
                                     },
                                     text: 'Sign Up',
                                     options: FFButtonOptions(
