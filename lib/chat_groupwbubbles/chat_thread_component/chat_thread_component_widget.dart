@@ -366,7 +366,27 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                             fillColor: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
                             icon: Icon(
-                              Icons.add_call,
+                              Icons.call,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 24.0,
+                            ),
+                            onPressed: () {
+                              print('IconButton pressed ...');
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              5.0, 0.0, 1.0, 0.0),
+                          child: FlutterFlowIconButton(
+                            borderColor: FlutterFlowTheme.of(context).success,
+                            borderRadius: 60.0,
+                            borderWidth: 1.0,
+                            buttonSize: 40.0,
+                            fillColor: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            icon: Icon(
+                              Icons.video_call,
                               color: FlutterFlowTheme.of(context).primaryText,
                               size: 24.0,
                             ),
