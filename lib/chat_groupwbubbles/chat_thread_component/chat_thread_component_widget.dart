@@ -270,7 +270,7 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         FlutterFlowIconButton(
-                          borderColor: FlutterFlowTheme.of(context).alternate,
+                          borderColor: FlutterFlowTheme.of(context).success,
                           borderRadius: 60.0,
                           borderWidth: 1.0,
                           buttonSize: 40.0,
@@ -278,7 +278,7 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                               FlutterFlowTheme.of(context).secondaryBackground,
                           icon: Icon(
                             Icons.add_rounded,
-                            color: FlutterFlowTheme.of(context).secondaryText,
+                            color: FlutterFlowTheme.of(context).primaryText,
                             size: 24.0,
                           ),
                           onPressed: () async {
@@ -355,196 +355,41 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                             }
                           },
                         ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              5.0, 0.0, 1.0, 0.0),
+                          child: FlutterFlowIconButton(
+                            borderColor: FlutterFlowTheme.of(context).success,
+                            borderRadius: 60.0,
+                            borderWidth: 1.0,
+                            buttonSize: 40.0,
+                            fillColor: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            icon: Icon(
+                              Icons.add_call,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 24.0,
+                            ),
+                            onPressed: () {
+                              print('IconButton pressed ...');
+                            },
+                          ),
+                        ),
                         Expanded(
-                          child: Stack(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8.0, 0.0, 0.0, 0.0),
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  child: TextFormField(
-                                    controller: _model.textController,
-                                    focusNode: _model.textFieldFocusNode,
-                                    onFieldSubmitted: (_) async {
-                                      if (_model.formKey.currentState == null ||
-                                          !_model.formKey.currentState!
-                                              .validate()) {
-                                        return;
-                                      }
-                                      // newChatMessage
-
-                                      var chatMessagesRecordReference =
-                                          ChatMessagesRecord.collection.doc();
-                                      await chatMessagesRecordReference
-                                          .set(createChatMessagesRecordData(
-                                        user: currentUserReference,
-                                        chat: widget.chatRef?.reference,
-                                        text: _model.textController.text,
-                                        timestamp: getCurrentTimestamp,
-                                        image: _model.uploadedFileUrl,
-                                      ));
-                                      _model.newChatMessage = ChatMessagesRecord
-                                          .getDocumentFromData(
-                                              createChatMessagesRecordData(
-                                                user: currentUserReference,
-                                                chat: widget.chatRef?.reference,
-                                                text:
-                                                    _model.textController.text,
-                                                timestamp: getCurrentTimestamp,
-                                                image: _model.uploadedFileUrl,
-                                              ),
-                                              chatMessagesRecordReference);
-                                      // clearUsers
-                                      _model.lastSeenBy = [];
-                                      // In order to add a single user reference to a list of user references we are adding our current user reference to a page state.
-                                      //
-                                      // We will then set the value of the user reference list from this page state.
-                                      // addMyUserToList
-                                      _model.addToLastSeenBy(
-                                          currentUserReference!);
-                                      // updateChatDocument
-
-                                      await widget.chatRef!.reference.update({
-                                        ...createChatsRecordData(
-                                          lastMessageTime: getCurrentTimestamp,
-                                          lastMessageSentBy:
-                                              currentUserReference,
-                                          lastMessage:
-                                              _model.textController.text,
-                                        ),
-                                        ...mapToFirestore(
-                                          {
-                                            'last_message_seen_by':
-                                                _model.lastSeenBy,
-                                          },
-                                        ),
-                                      });
-                                      // clearUsers
-                                      _model.lastSeenBy = [];
-                                      setState(() {
-                                        _model.textController?.clear();
-                                      });
-                                      setState(() {
-                                        _model.isDataUploading = false;
-                                        _model.uploadedLocalFile =
-                                            FFUploadedFile(
-                                                bytes: Uint8List.fromList([]));
-                                        _model.uploadedFileUrl = '';
-                                      });
-
-                                      setState(() {
-                                        _model.imagesUploaded = [];
-                                      });
-
-                                      setState(() {});
-                                    },
-                                    autofocus: true,
-                                    textCapitalization:
-                                        TextCapitalization.sentences,
-                                    textInputAction: TextInputAction.send,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            letterSpacing: 0.0,
-                                          ),
-                                      hintText: 'Start typing here...',
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .labelSmall
-                                          .override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            letterSpacing: 0.0,
-                                          ),
-                                      errorStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .error,
-                                            fontSize: 12.0,
-                                            letterSpacing: 0.0,
-                                          ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(24.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(24.0),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(24.0),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(24.0),
-                                      ),
-                                      contentPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              16.0, 16.0, 56.0, 16.0),
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          letterSpacing: 0.0,
-                                        ),
-                                    maxLines: 12,
-                                    minLines: 1,
-                                    cursorColor:
-                                        FlutterFlowTheme.of(context).primary,
-                                    validator: _model.textControllerValidator
-                                        .asValidator(context),
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: const AlignmentDirectional(1.0, 0.0),
-                                child: Padding(
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                1.0, 0.0, 1.0, 0.0),
+                            child: Stack(
+                              children: [
+                                Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 6.0, 4.0),
-                                  child: FlutterFlowIconButton(
-                                    borderColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    borderRadius: 20.0,
-                                    borderWidth: 1.0,
-                                    buttonSize: 40.0,
-                                    fillColor:
-                                        FlutterFlowTheme.of(context).accent1,
-                                    icon: Icon(
-                                      Icons.send_rounded,
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      size: 20.0,
-                                    ),
-                                    onPressed: () async {
-                                      final firestoreBatch =
-                                          FirebaseFirestore.instance.batch();
-                                      try {
+                                      8.0, 0.0, 1.0, 0.0),
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    child: TextFormField(
+                                      controller: _model.textController,
+                                      focusNode: _model.textFieldFocusNode,
+                                      onFieldSubmitted: (_) async {
                                         if (_model.formKey.currentState ==
                                                 null ||
                                             !_model.formKey.currentState!
@@ -555,16 +400,15 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
 
                                         var chatMessagesRecordReference =
                                             ChatMessagesRecord.collection.doc();
-                                        firestoreBatch.set(
-                                            chatMessagesRecordReference,
-                                            createChatMessagesRecordData(
-                                              user: currentUserReference,
-                                              chat: widget.chatRef?.reference,
-                                              text: _model.textController.text,
-                                              timestamp: getCurrentTimestamp,
-                                              image: _model.uploadedFileUrl,
-                                            ));
-                                        _model.newChat = ChatMessagesRecord
+                                        await chatMessagesRecordReference
+                                            .set(createChatMessagesRecordData(
+                                          user: currentUserReference,
+                                          chat: widget.chatRef?.reference,
+                                          text: _model.textController.text,
+                                          timestamp: getCurrentTimestamp,
+                                          image: _model.uploadedFileUrl,
+                                        ));
+                                        _model.newChatMessage = ChatMessagesRecord
                                             .getDocumentFromData(
                                                 createChatMessagesRecordData(
                                                   user: currentUserReference,
@@ -587,8 +431,7 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                             currentUserReference!);
                                         // updateChatDocument
 
-                                        firestoreBatch
-                                            .update(widget.chatRef!.reference, {
+                                        await widget.chatRef!.reference.update({
                                           ...createChatsRecordData(
                                             lastMessageTime:
                                                 getCurrentTimestamp,
@@ -621,16 +464,206 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                         setState(() {
                                           _model.imagesUploaded = [];
                                         });
-                                      } finally {
-                                        await firestoreBatch.commit();
-                                      }
 
-                                      setState(() {});
-                                    },
+                                        setState(() {});
+                                      },
+                                      autofocus: true,
+                                      textCapitalization:
+                                          TextCapitalization.sentences,
+                                      textInputAction: TextInputAction.send,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        hintText: 'Start typing here...',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .labelSmall
+                                            .override(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        errorStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              fontSize: 12.0,
+                                              letterSpacing: 0.0,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(24.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(24.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(24.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(24.0),
+                                        ),
+                                        contentPadding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                                16.0, 16.0, 56.0, 16.0),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      maxLines: 12,
+                                      minLines: 1,
+                                      cursorColor:
+                                          FlutterFlowTheme.of(context).primary,
+                                      validator: _model.textControllerValidator
+                                          .asValidator(context),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                                Align(
+                                  alignment: const AlignmentDirectional(1.0, 0.0),
+                                  child: Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 4.0, 6.0, 4.0),
+                                    child: FlutterFlowIconButton(
+                                      borderColor: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      borderRadius: 20.0,
+                                      borderWidth: 1.0,
+                                      buttonSize: 40.0,
+                                      fillColor:
+                                          FlutterFlowTheme.of(context).accent1,
+                                      icon: Icon(
+                                        Icons.send_rounded,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 20.0,
+                                      ),
+                                      onPressed: () async {
+                                        final firestoreBatch =
+                                            FirebaseFirestore.instance.batch();
+                                        try {
+                                          if (_model.formKey.currentState ==
+                                                  null ||
+                                              !_model.formKey.currentState!
+                                                  .validate()) {
+                                            return;
+                                          }
+                                          // newChatMessage
+
+                                          var chatMessagesRecordReference =
+                                              ChatMessagesRecord.collection
+                                                  .doc();
+                                          firestoreBatch.set(
+                                              chatMessagesRecordReference,
+                                              createChatMessagesRecordData(
+                                                user: currentUserReference,
+                                                chat: widget.chatRef?.reference,
+                                                text:
+                                                    _model.textController.text,
+                                                timestamp: getCurrentTimestamp,
+                                                image: _model.uploadedFileUrl,
+                                              ));
+                                          _model.newChat = ChatMessagesRecord
+                                              .getDocumentFromData(
+                                                  createChatMessagesRecordData(
+                                                    user: currentUserReference,
+                                                    chat: widget
+                                                        .chatRef?.reference,
+                                                    text: _model
+                                                        .textController.text,
+                                                    timestamp:
+                                                        getCurrentTimestamp,
+                                                    image:
+                                                        _model.uploadedFileUrl,
+                                                  ),
+                                                  chatMessagesRecordReference);
+                                          // clearUsers
+                                          _model.lastSeenBy = [];
+                                          // In order to add a single user reference to a list of user references we are adding our current user reference to a page state.
+                                          //
+                                          // We will then set the value of the user reference list from this page state.
+                                          // addMyUserToList
+                                          _model.addToLastSeenBy(
+                                              currentUserReference!);
+                                          // updateChatDocument
+
+                                          firestoreBatch.update(
+                                              widget.chatRef!.reference, {
+                                            ...createChatsRecordData(
+                                              lastMessageTime:
+                                                  getCurrentTimestamp,
+                                              lastMessageSentBy:
+                                                  currentUserReference,
+                                              lastMessage:
+                                                  _model.textController.text,
+                                            ),
+                                            ...mapToFirestore(
+                                              {
+                                                'last_message_seen_by':
+                                                    _model.lastSeenBy,
+                                              },
+                                            ),
+                                          });
+                                          // clearUsers
+                                          _model.lastSeenBy = [];
+                                          setState(() {
+                                            _model.textController?.clear();
+                                          });
+                                          setState(() {
+                                            _model.isDataUploading = false;
+                                            _model.uploadedLocalFile =
+                                                FFUploadedFile(
+                                                    bytes:
+                                                        Uint8List.fromList([]));
+                                            _model.uploadedFileUrl = '';
+                                          });
+
+                                          setState(() {
+                                            _model.imagesUploaded = [];
+                                          });
+                                        } finally {
+                                          await firestoreBatch.commit();
+                                        }
+
+                                        setState(() {});
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],

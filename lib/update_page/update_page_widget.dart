@@ -106,90 +106,115 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                         child: Padding(
                           padding: const EdgeInsets.all(2.0),
                           child: AuthUserStreamWidget(
-                            builder: (context) => InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                final selectedMedia =
-                                    await selectMediaWithSourceBottomSheet(
-                                  context: context,
-                                  maxWidth: 80.00,
-                                  maxHeight: 80.00,
-                                  imageQuality: 90,
-                                  allowPhoto: true,
-                                );
-                                if (selectedMedia != null &&
-                                    selectedMedia.every((m) =>
-                                        validateFileFormat(
-                                            m.storagePath, context))) {
-                                  setState(() => _model.isDataUploading = true);
-                                  var selectedUploadedFiles =
-                                      <FFUploadedFile>[];
-
-                                  var downloadUrls = <String>[];
-                                  try {
-                                    showUploadMessage(
-                                      context,
-                                      'Uploading file...',
-                                      showLoading: true,
-                                    );
-                                    selectedUploadedFiles = selectedMedia
-                                        .map((m) => FFUploadedFile(
-                                              name:
-                                                  m.storagePath.split('/').last,
-                                              bytes: m.bytes,
-                                              height: m.dimensions?.height,
-                                              width: m.dimensions?.width,
-                                              blurHash: m.blurHash,
-                                            ))
-                                        .toList();
-
-                                    downloadUrls = (await Future.wait(
-                                      selectedMedia.map(
-                                        (m) async => await uploadData(
-                                            m.storagePath, m.bytes),
+                            builder: (context) => StreamBuilder<UsersRecord>(
+                              stream: UsersRecord.getDocument(
+                                  currentUserReference!),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 40.0,
+                                      height: 40.0,
+                                      child: SpinKitFoldingCube(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 40.0,
                                       ),
-                                    ))
-                                        .where((u) => u != null)
-                                        .map((u) => u!)
-                                        .toList();
-                                  } finally {
-                                    ScaffoldMessenger.of(context)
-                                        .hideCurrentSnackBar();
-                                    _model.isDataUploading = false;
-                                  }
-                                  if (selectedUploadedFiles.length ==
-                                          selectedMedia.length &&
-                                      downloadUrls.length ==
-                                          selectedMedia.length) {
-                                    setState(() {
-                                      _model.uploadedLocalFile =
-                                          selectedUploadedFiles.first;
-                                      _model.uploadedFileUrl =
-                                          downloadUrls.first;
-                                    });
-                                    showUploadMessage(context, 'Success!');
-                                  } else {
-                                    setState(() {});
-                                    showUploadMessage(
-                                        context, 'Failed to upload data');
-                                    return;
-                                  }
+                                    ),
+                                  );
                                 }
+                                final userAvatarUsersRecord = snapshot.data!;
+                                return InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    final selectedMedia =
+                                        await selectMediaWithSourceBottomSheet(
+                                      context: context,
+                                      maxWidth: 80.00,
+                                      maxHeight: 80.00,
+                                      imageQuality: 90,
+                                      allowPhoto: true,
+                                    );
+                                    if (selectedMedia != null &&
+                                        selectedMedia.every((m) =>
+                                            validateFileFormat(
+                                                m.storagePath, context))) {
+                                      setState(
+                                          () => _model.isDataUploading = true);
+                                      var selectedUploadedFiles =
+                                          <FFUploadedFile>[];
+
+                                      var downloadUrls = <String>[];
+                                      try {
+                                        showUploadMessage(
+                                          context,
+                                          'Uploading file...',
+                                          showLoading: true,
+                                        );
+                                        selectedUploadedFiles = selectedMedia
+                                            .map((m) => FFUploadedFile(
+                                                  name: m.storagePath
+                                                      .split('/')
+                                                      .last,
+                                                  bytes: m.bytes,
+                                                  height: m.dimensions?.height,
+                                                  width: m.dimensions?.width,
+                                                  blurHash: m.blurHash,
+                                                ))
+                                            .toList();
+
+                                        downloadUrls = (await Future.wait(
+                                          selectedMedia.map(
+                                            (m) async => await uploadData(
+                                                m.storagePath, m.bytes),
+                                          ),
+                                        ))
+                                            .where((u) => u != null)
+                                            .map((u) => u!)
+                                            .toList();
+                                      } finally {
+                                        ScaffoldMessenger.of(context)
+                                            .hideCurrentSnackBar();
+                                        _model.isDataUploading = false;
+                                      }
+                                      if (selectedUploadedFiles.length ==
+                                              selectedMedia.length &&
+                                          downloadUrls.length ==
+                                              selectedMedia.length) {
+                                        setState(() {
+                                          _model.uploadedLocalFile =
+                                              selectedUploadedFiles.first;
+                                          _model.uploadedFileUrl =
+                                              downloadUrls.first;
+                                        });
+                                        showUploadMessage(context, 'Success!');
+                                      } else {
+                                        setState(() {});
+                                        showUploadMessage(
+                                            context, 'Failed to upload data');
+                                        return;
+                                      }
+                                    }
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: CachedNetworkImage(
+                                      fadeInDuration:
+                                          const Duration(milliseconds: 3000),
+                                      fadeOutDuration:
+                                          const Duration(milliseconds: 3000),
+                                      imageUrl: currentUserPhoto,
+                                      width: 80.0,
+                                      height: 80.0,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                );
                               },
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: CachedNetworkImage(
-                                  fadeInDuration: const Duration(milliseconds: 3000),
-                                  fadeOutDuration: const Duration(milliseconds: 3000),
-                                  imageUrl: currentUserPhoto,
-                                  width: 80.0,
-                                  height: 80.0,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
                             ),
                           ),
                         ),
@@ -265,7 +290,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                                 child: TextFormField(
                                   controller: _model.firstNameTextController,
                                   focusNode: _model.firstNameFocusNode,
-                                  autofocus: true,
+                                  autofocus: false,
                                   autofillHints: const [AutofillHints.name],
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -509,7 +534,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 10.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 14.0, 0.0, 10.0),
                 child: StreamBuilder<UsersRecord>(
                   stream: UsersRecord.getDocument(currentUserReference!),
                   builder: (context, snapshot) {
@@ -536,6 +561,9 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                           phoneNumber: _model.phoneNumberTextController.text,
                           photoUrl: _model.uploadedFileUrl,
                         ));
+                        setState(() {
+                          FFAppState().username = currentUserReference;
+                        });
                       },
                       text: 'Update Profile',
                       options: FFButtonOptions(
@@ -605,7 +633,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 40.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 30.0),
                 child: FFButtonWidget(
                   onPressed: () async {
                     GoRouter.of(context).prepareAuthEvent();
@@ -635,13 +663,16 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                   ),
                 ),
               ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.asset(
-                  'assets/images/unicollab-high-resolution-logo-black-transparent.png',
-                  width: 150.0,
-                  height: 150.0,
-                  fit: BoxFit.cover,
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.asset(
+                    'assets/images/unicollab-high-resolution-logo-black-transparent.png',
+                    width: 150.0,
+                    height: 150.0,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ],
