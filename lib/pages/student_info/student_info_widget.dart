@@ -112,8 +112,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      0.0, 70.0, 0.0, 32.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 70.0, 0.0, 32.0),
                   child: Container(
                     width: 200.0,
                     height: 70.0,
@@ -229,9 +228,8 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                         FlutterFlowTheme.of(context).alternate,
                                     borderWidth: 2.0,
                                     borderRadius: 8.0,
-                                    margin:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 4.0, 16.0, 4.0),
+                                    margin: const EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 4.0, 16.0, 4.0),
                                     hidesUnderline: true,
                                     isOverButton: true,
                                     isSearchable: false,
@@ -304,9 +302,8 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                           .alternate,
                                       borderWidth: 2.0,
                                       borderRadius: 8.0,
-                                      margin:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              16.0, 4.0, 16.0, 4.0),
+                                      margin: const EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 4.0, 16.0, 4.0),
                                       hidesUnderline: true,
                                       isOverButton: true,
                                       isSearchable: false,
@@ -379,9 +376,8 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                           .alternate,
                                       borderWidth: 2.0,
                                       borderRadius: 8.0,
-                                      margin:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              16.0, 4.0, 16.0, 4.0),
+                                      margin: const EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 4.0, 16.0, 4.0),
                                       hidesUnderline: true,
                                       isOverButton: true,
                                       isSearchable: false,
@@ -446,9 +442,8 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                         FlutterFlowTheme.of(context).alternate,
                                     borderWidth: 2.0,
                                     borderRadius: 8.0,
-                                    margin:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 4.0, 16.0, 4.0),
+                                    margin: const EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 4.0, 16.0, 4.0),
                                     hidesUnderline: true,
                                     isOverButton: true,
                                     isSearchable: false,
@@ -572,7 +567,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                         phoneNumber: _model
                                             .phoneNumberTextController.text,
                                         photoUrl:
-                                            'https://e7.pngegg.com/pngimages/980/304/png-clipart-computer-icons-user-profile-avatar-heroes-silhouette-thumbnail.png',
+                                            'gs://unicollab-f6e1e.appspot.com/up.png',
                                       ));
 
                                       context.pushNamed('chat_2_main');
@@ -581,9 +576,8 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                     options: FFButtonOptions(
                                       width: double.infinity,
                                       height: 44.0,
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 0.0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 0.0),
                                       iconPadding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),

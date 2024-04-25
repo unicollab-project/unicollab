@@ -134,9 +134,6 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                                     final selectedMedia =
                                         await selectMediaWithSourceBottomSheet(
                                       context: context,
-                                      maxWidth: 80.00,
-                                      maxHeight: 80.00,
-                                      imageQuality: 90,
                                       allowPhoto: true,
                                     );
                                     if (selectedMedia != null &&
@@ -150,11 +147,6 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
 
                                       var downloadUrls = <String>[];
                                       try {
-                                        showUploadMessage(
-                                          context,
-                                          'Uploading file...',
-                                          showLoading: true,
-                                        );
                                         selectedUploadedFiles = selectedMedia
                                             .map((m) => FFUploadedFile(
                                                   name: m.storagePath
@@ -177,8 +169,6 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                                             .map((u) => u!)
                                             .toList();
                                       } finally {
-                                        ScaffoldMessenger.of(context)
-                                            .hideCurrentSnackBar();
                                         _model.isDataUploading = false;
                                       }
                                       if (selectedUploadedFiles.length ==
@@ -191,14 +181,16 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                                           _model.uploadedFileUrl =
                                               downloadUrls.first;
                                         });
-                                        showUploadMessage(context, 'Success!');
                                       } else {
                                         setState(() {});
-                                        showUploadMessage(
-                                            context, 'Failed to upload data');
                                         return;
                                       }
                                     }
+
+                                    await currentUserReference!
+                                        .update(createUsersRecordData(
+                                      photoUrl: currentUserPhoto,
+                                    ));
                                   },
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8.0),
@@ -556,14 +548,19 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                       onPressed: () async {
                         await buttonUsersRecord.reference
                             .update(createUsersRecordData(
-                          displayName: _model.firstNameTextController.text,
-                          lastName: _model.lastNameTextController.text,
-                          phoneNumber: _model.phoneNumberTextController.text,
-                          photoUrl: _model.uploadedFileUrl,
+                          displayName:
+                              _model.firstNameTextController.text != ''
+                                  ? _model.firstNameTextController.text
+                                  : currentUserDisplayName,
+                          lastName:
+                              _model.lastNameTextController.text != ''
+                                  ? _model.lastNameTextController.text
+                                  : valueOrDefault(
+                                      currentUserDocument?.lastName, ''),
+                          phoneNumber: _model.phoneNumberTextController.text != ''
+                              ? _model.phoneNumberTextController.text
+                              : currentPhoneNumber,
                         ));
-                        setState(() {
-                          FFAppState().username = currentUserReference;
-                        });
                       },
                       text: 'Update Profile',
                       options: FFButtonOptions(
