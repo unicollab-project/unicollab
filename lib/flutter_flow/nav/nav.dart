@@ -1,9 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:go_router/go_router.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
 
@@ -12,10 +9,7 @@ import '/auth/base_auth_user_provider.dart';
 import '/index.dart';
 import '/main.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/lat_lng.dart';
-import '/flutter_flow/place.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
@@ -80,40 +74,40 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? NavBarPage() : LoginPageWidget(),
+          appStateNotifier.loggedIn ? const NavBarPage() : const LoginPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? NavBarPage() : LoginPageWidget(),
+              appStateNotifier.loggedIn ? const NavBarPage() : const LoginPageWidget(),
         ),
         FFRoute(
           name: 'LoginPage',
           path: '/loginPage',
-          builder: (context, params) => LoginPageWidget(),
+          builder: (context, params) => const LoginPageWidget(),
         ),
         FFRoute(
           name: 'SignupPage',
           path: '/signupPage',
-          builder: (context, params) => SignupPageWidget(),
+          builder: (context, params) => const SignupPageWidget(),
         ),
         FFRoute(
           name: 'StudentInfo',
           path: '/studentInfo',
-          builder: (context, params) => StudentInfoWidget(),
+          builder: (context, params) => const StudentInfoWidget(),
         ),
         FFRoute(
           name: 'VirtualStudySpace',
           path: '/virtualStudySpace',
-          builder: (context, params) => VirtualStudySpaceWidget(),
+          builder: (context, params) => const VirtualStudySpaceWidget(),
         ),
         FFRoute(
           name: 'UpdatePage',
           path: '/updatePage',
           builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'UpdatePage')
-              : UpdatePageWidget(),
+              ? const NavBarPage(initialPage: 'UpdatePage')
+              : const UpdatePageWidget(),
         ),
         FFRoute(
           name: 'chat_2_Details',
@@ -132,8 +126,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'chat_2_main',
           path: '/chat2Main',
           builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'chat_2_main')
-              : Chat2MainWidget(),
+              ? const NavBarPage(initialPage: 'chat_2_main')
+              : const Chat2MainWidget(),
         ),
         FFRoute(
           name: 'chat_2_InviteUsers',
@@ -159,6 +153,29 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             chatMessage: params.getParam(
               'chatMessage',
               ParamType.Document,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'VideoCall',
+          path: '/videoCall',
+          builder: (context, params) => const VideoCallWidget(),
+        ),
+        FFRoute(
+          name: 'VideoCallPage',
+          path: '/videoCallPage',
+          builder: (context, params) => VideoCallPageWidget(
+            callID: params.getParam(
+              'callID',
+              ParamType.String,
+            ),
+            userID: params.getParam(
+              'userID',
+              ParamType.String,
+            ),
+            userName: params.getParam(
+              'userName',
+              ParamType.String,
             ),
           ),
         )
@@ -395,7 +412,7 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {

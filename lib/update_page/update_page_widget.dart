@@ -6,12 +6,9 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'update_page_model.dart';
 export 'update_page_model.dart';
 
@@ -93,7 +90,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                 ),
                 child: Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 40.0, 20.0, 0.0),
+                      const EdgeInsetsDirectional.fromSTEB(20.0, 40.0, 20.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -107,7 +104,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(2.0),
+                          padding: const EdgeInsets.all(2.0),
                           child: AuthUserStreamWidget(
                             builder: (context) => StreamBuilder<UsersRecord>(
                               stream: UsersRecord.getDocument(
@@ -199,9 +196,9 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                                     borderRadius: BorderRadius.circular(8.0),
                                     child: CachedNetworkImage(
                                       fadeInDuration:
-                                          Duration(milliseconds: 3000),
+                                          const Duration(milliseconds: 3000),
                                       fadeOutDuration:
-                                          Duration(milliseconds: 3000),
+                                          const Duration(milliseconds: 3000),
                                       imageUrl: currentUserPhoto,
                                       width: 80.0,
                                       height: 80.0,
@@ -216,7 +213,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               8.0, 0.0, 0.0, 0.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
@@ -241,7 +238,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                               if (columnUsersRecord?.email != null &&
                                   columnUsersRecord?.email != '')
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 4.0, 0.0, 0.0),
                                   child: Text(
                                     currentUserEmail,
@@ -249,7 +246,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Plus Jakarta Sans',
-                                          color: Color(0xB4FFFFFF),
+                                          color: const Color(0xB4FFFFFF),
                                           fontSize: 14.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.normal,
@@ -265,28 +262,28 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(10.0, 16.0, 10.0, 10.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(10.0, 16.0, 10.0, 10.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 4.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 4.0, 0.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 5.0, 0.0, 5.0),
-                              child: Container(
+                              child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
                                   controller: _model.firstNameTextController,
                                   focusNode: _model.firstNameFocusNode,
                                   autofocus: false,
-                                  autofillHints: [AutofillHints.name],
+                                  autofillHints: const [AutofillHints.name],
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     labelText: 'Update First Name',
@@ -358,22 +355,22 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 4.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 4.0, 0.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 5.0, 0.0, 5.0),
-                              child: Container(
+                              child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
                                   controller: _model.lastNameTextController,
                                   focusNode: _model.lastNameFocusNode,
                                   autofocus: true,
-                                  autofillHints: [AutofillHints.email],
+                                  autofillHints: const [AutofillHints.email],
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     labelText: 'Update Last Name',
@@ -437,22 +434,22 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 4.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 4.0, 0.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 5.0, 0.0, 5.0),
-                              child: Container(
+                              child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
                                   controller: _model.phoneNumberTextController,
                                   focusNode: _model.phoneNumberFocusNode,
                                   autofocus: true,
-                                  autofillHints: [
+                                  autofillHints: const [
                                     AutofillHints.telephoneNumber
                                   ],
                                   obscureText: false,
@@ -529,7 +526,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 14.0, 0.0, 10.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 14.0, 0.0, 10.0),
                 child: StreamBuilder<UsersRecord>(
                   stream: UsersRecord.getDocument(currentUserReference!),
                   builder: (context, snapshot) {
@@ -552,19 +549,15 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                         await buttonUsersRecord.reference
                             .update(createUsersRecordData(
                           displayName:
-                              _model.firstNameTextController.text != null &&
-                                      _model.firstNameTextController.text != ''
+                              _model.firstNameTextController.text != ''
                                   ? _model.firstNameTextController.text
                                   : currentUserDisplayName,
                           lastName:
-                              _model.lastNameTextController.text != null &&
-                                      _model.lastNameTextController.text != ''
+                              _model.lastNameTextController.text != ''
                                   ? _model.lastNameTextController.text
                                   : valueOrDefault(
                                       currentUserDocument?.lastName, ''),
-                          phoneNumber: _model.phoneNumberTextController.text !=
-                                      null &&
-                                  _model.phoneNumberTextController.text != ''
+                          phoneNumber: _model.phoneNumberTextController.text != ''
                               ? _model.phoneNumberTextController.text
                               : currentPhoneNumber,
                         ));
@@ -574,9 +567,9 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                         width: 130.0,
                         height: 50.0,
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).primary,
                         textStyle:
                             FlutterFlowTheme.of(context).bodyLarge.override(
@@ -596,19 +589,19 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 0.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
                       child: Switch.adaptive(
                         value: _model.switchValue ??= true,
                         onChanged: (newValue) async {
-                          setState(() => _model.switchValue = newValue!);
-                          if (newValue!) {
+                          setState(() => _model.switchValue = newValue);
+                          if (newValue) {
                             setDarkModeSetting(context, ThemeMode.dark);
                           } else {
                             setDarkModeSetting(context, ThemeMode.light);
@@ -624,7 +617,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
                       child: Text(
                         'Enable Dark Mode',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -637,7 +630,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 30.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 30.0),
                 child: FFButtonWidget(
                   onPressed: () async {
                     GoRouter.of(context).prepareAuthEvent();
@@ -650,9 +643,9 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                   options: FFButtonOptions(
                     width: 100.0,
                     height: 50.0,
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                     textStyle: FlutterFlowTheme.of(context).bodyLarge.override(
                           fontFamily: 'Plus Jakarta Sans',
@@ -668,7 +661,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.asset(

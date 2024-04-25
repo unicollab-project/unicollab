@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'chat2_main_widget.dart' show Chat2MainWidget;
+import 'video_call_page_widget.dart' show VideoCallPageWidget;
 import 'package:flutter/material.dart';
 
-class Chat2MainModel extends FlutterFlowModel<Chat2MainWidget> {
+class VideoCallPageModel extends FlutterFlowModel<VideoCallPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();

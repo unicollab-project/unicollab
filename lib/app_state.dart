@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'flutter_flow/request_manager.dart';
 import '/backend/backend.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'flutter_flow/flutter_flow_util.dart';
 
 class FFAppState extends ChangeNotifier {
   static FFAppState _instance = FFAppState._internal();
@@ -26,8 +24,8 @@ class FFAppState extends ChangeNotifier {
 
   DocumentReference? _chats;
   DocumentReference? get chats => _chats;
-  set chats(DocumentReference? _value) {
-    _chats = _value;
+  set chats(DocumentReference? value) {
+    _chats = value;
   }
 
   final _userDocQueryManager = FutureRequestManager<UsersRecord>();
