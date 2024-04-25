@@ -6,10 +6,14 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'student_info_model.dart';
 export 'student_info_model.dart';
 
@@ -52,22 +56,22 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 300.0.ms,
-            begin: const Offset(0.0, 140.0),
-            end: const Offset(0.0, 0.0),
+            begin: Offset(0.0, 140.0),
+            end: Offset(0.0, 0.0),
           ),
           ScaleEffect(
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 300.0.ms,
-            begin: const Offset(0.9, 0.9),
-            end: const Offset(1.0, 1.0),
+            begin: Offset(0.9, 0.9),
+            end: Offset(1.0, 1.0),
           ),
           TiltEffect(
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 300.0.ms,
-            begin: const Offset(-0.349, 0),
-            end: const Offset(0, 0),
+            begin: Offset(-0.349, 0),
+            end: Offset(0, 0),
           ),
         ],
       ),
@@ -100,26 +104,26 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                 FlutterFlowTheme.of(context).primary,
                 FlutterFlowTheme.of(context).tertiary
               ],
-              stops: const [0.0, 1.0],
-              begin: const AlignmentDirectional(0.87, -1.0),
-              end: const AlignmentDirectional(-0.87, 1.0),
+              stops: [0.0, 1.0],
+              begin: AlignmentDirectional(0.87, -1.0),
+              end: AlignmentDirectional(-0.87, 1.0),
             ),
           ),
-          alignment: const AlignmentDirectional(0.0, -1.0),
+          alignment: AlignmentDirectional(0.0, -1.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 70.0, 0.0, 32.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 70.0, 0.0, 32.0),
                   child: Container(
                     width: 200.0,
                     height: 70.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16.0),
                     ),
-                    alignment: const AlignmentDirectional(0.0, 0.0),
+                    alignment: AlignmentDirectional(0.0, 0.0),
                     child: Text(
                       'Your Details',
                       style: FlutterFlowTheme.of(context).displaySmall.override(
@@ -131,15 +135,15 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(16.0),
                   child: Container(
                     width: double.infinity,
-                    constraints: const BoxConstraints(
+                    constraints: BoxConstraints(
                       maxWidth: 570.0,
                     ),
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
-                      boxShadow: const [
+                      boxShadow: [
                         BoxShadow(
                           blurRadius: 4.0,
                           color: Color(0x33000000),
@@ -152,15 +156,15 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     child: Align(
-                      alignment: const AlignmentDirectional(0.0, 0.0),
+                      alignment: AlignmentDirectional(0.0, 0.0),
                       child: Padding(
-                        padding: const EdgeInsets.all(32.0),
+                        padding: EdgeInsets.all(32.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 12.0, 0.0, 24.0),
                               child: Text(
                                 'Fill out the information below in order to create your account.',
@@ -174,7 +178,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 16.0),
                               child: StreamBuilder<List<StatesRecord>>(
                                 stream: queryStatesRecord(),
@@ -228,7 +232,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                         FlutterFlowTheme.of(context).alternate,
                                     borderWidth: 2.0,
                                     borderRadius: 8.0,
-                                    margin: const EdgeInsetsDirectional.fromSTEB(
+                                    margin: EdgeInsetsDirectional.fromSTEB(
                                         16.0, 4.0, 16.0, 4.0),
                                     hidesUnderline: true,
                                     isOverButton: true,
@@ -241,7 +245,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                             if (_model.stateNameValue != null &&
                                 _model.stateNameValue != '')
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 16.0),
                                 child: StreamBuilder<List<CitiesRecord>>(
                                   stream: queryCitiesRecord(
@@ -302,7 +306,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                           .alternate,
                                       borderWidth: 2.0,
                                       borderRadius: 8.0,
-                                      margin: const EdgeInsetsDirectional.fromSTEB(
+                                      margin: EdgeInsetsDirectional.fromSTEB(
                                           16.0, 4.0, 16.0, 4.0),
                                       hidesUnderline: true,
                                       isOverButton: true,
@@ -315,7 +319,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                             if (_model.cityNameValue != null &&
                                 _model.cityNameValue != '')
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 16.0),
                                 child: StreamBuilder<List<CollegeNamesRecord>>(
                                   stream: queryCollegeNamesRecord(
@@ -376,7 +380,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                           .alternate,
                                       borderWidth: 2.0,
                                       borderRadius: 8.0,
-                                      margin: const EdgeInsetsDirectional.fromSTEB(
+                                      margin: EdgeInsetsDirectional.fromSTEB(
                                           16.0, 4.0, 16.0, 4.0),
                                       hidesUnderline: true,
                                       isOverButton: true,
@@ -387,7 +391,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                 ),
                               ),
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 16.0),
                               child: StreamBuilder<List<BranchRecord>>(
                                 stream: queryBranchRecord(),
@@ -442,7 +446,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                         FlutterFlowTheme.of(context).alternate,
                                     borderWidth: 2.0,
                                     borderRadius: 8.0,
-                                    margin: const EdgeInsetsDirectional.fromSTEB(
+                                    margin: EdgeInsetsDirectional.fromSTEB(
                                         16.0, 4.0, 16.0, 4.0),
                                     hidesUnderline: true,
                                     isOverButton: true,
@@ -453,15 +457,15 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 16.0),
-                              child: SizedBox(
+                              child: Container(
                                 width: double.infinity,
                                 child: TextFormField(
                                   controller: _model.phoneNumberTextController,
                                   focusNode: _model.phoneNumberFocusNode,
                                   autofocus: true,
-                                  autofillHints: const [
+                                  autofillHints: [
                                     AutofillHints.telephoneNumber
                                   ],
                                   obscureText: false,
@@ -508,7 +512,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                     filled: true,
                                     fillColor: FlutterFlowTheme.of(context)
                                         .primaryBackground,
-                                    prefixIcon: const Icon(
+                                    prefixIcon: Icon(
                                       Icons.phone_sharp,
                                       size: 22.0,
                                     ),
@@ -535,7 +539,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 16.0),
                               child: StreamBuilder<UsersRecord>(
                                 stream: UsersRecord.getDocument(
@@ -567,7 +571,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                         phoneNumber: _model
                                             .phoneNumberTextController.text,
                                         photoUrl:
-                                            'gs://unicollab-f6e1e.appspot.com/up.png',
+                                            'https://e7.pngegg.com/pngimages/980/304/png-clipart-computer-icons-user-profile-avatar-heroes-silhouette-thumbnail.png',
                                       ));
 
                                       context.pushNamed('chat_2_main');
@@ -576,10 +580,10 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                     options: FFButtonOptions(
                                       width: double.infinity,
                                       height: 44.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 0.0),
                                       iconPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
+                                          EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),
                                       color:
                                           FlutterFlowTheme.of(context).primary,
@@ -591,7 +595,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                             letterSpacing: 0.0,
                                           ),
                                       elevation: 3.0,
-                                      borderSide: const BorderSide(
+                                      borderSide: BorderSide(
                                         color: Colors.transparent,
                                         width: 1.0,
                                       ),

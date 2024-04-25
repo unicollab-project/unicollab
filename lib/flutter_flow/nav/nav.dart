@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:go_router/go_router.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
 
@@ -9,7 +12,10 @@ import '/auth/base_auth_user_provider.dart';
 import '/index.dart';
 import '/main.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/lat_lng.dart';
+import '/flutter_flow/place.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
@@ -74,40 +80,40 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const NavBarPage() : const LoginPageWidget(),
+          appStateNotifier.loggedIn ? NavBarPage() : LoginPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const NavBarPage() : const LoginPageWidget(),
+              appStateNotifier.loggedIn ? NavBarPage() : LoginPageWidget(),
         ),
         FFRoute(
           name: 'LoginPage',
           path: '/loginPage',
-          builder: (context, params) => const LoginPageWidget(),
+          builder: (context, params) => LoginPageWidget(),
         ),
         FFRoute(
           name: 'SignupPage',
           path: '/signupPage',
-          builder: (context, params) => const SignupPageWidget(),
+          builder: (context, params) => SignupPageWidget(),
         ),
         FFRoute(
           name: 'StudentInfo',
           path: '/studentInfo',
-          builder: (context, params) => const StudentInfoWidget(),
+          builder: (context, params) => StudentInfoWidget(),
         ),
         FFRoute(
           name: 'VirtualStudySpace',
           path: '/virtualStudySpace',
-          builder: (context, params) => const VirtualStudySpaceWidget(),
+          builder: (context, params) => VirtualStudySpaceWidget(),
         ),
         FFRoute(
           name: 'UpdatePage',
           path: '/updatePage',
           builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'UpdatePage')
-              : const UpdatePageWidget(),
+              ? NavBarPage(initialPage: 'UpdatePage')
+              : UpdatePageWidget(),
         ),
         FFRoute(
           name: 'chat_2_Details',
@@ -126,8 +132,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'chat_2_main',
           path: '/chat2Main',
           builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'chat_2_main')
-              : const Chat2MainWidget(),
+              ? NavBarPage(initialPage: 'chat_2_main')
+              : Chat2MainWidget(),
         ),
         FFRoute(
           name: 'chat_2_InviteUsers',
@@ -389,7 +395,7 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {
