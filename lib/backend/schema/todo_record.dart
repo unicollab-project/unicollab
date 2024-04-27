@@ -25,15 +25,27 @@ class TodoRecord extends FirestoreRecord {
   DateTime? get taskDeadline => _taskDeadline;
   bool hasTaskDeadline() => _taskDeadline != null;
 
-  // "user_created" field.
-  DocumentReference? _userCreated;
-  DocumentReference? get userCreated => _userCreated;
-  bool hasUserCreated() => _userCreated != null;
+  // "task_description" field.
+  String? _taskDescription;
+  String get taskDescription => _taskDescription ?? '';
+  bool hasTaskDescription() => _taskDescription != null;
+
+  // "task_creator" field.
+  DocumentReference? _taskCreator;
+  DocumentReference? get taskCreator => _taskCreator;
+  bool hasTaskCreator() => _taskCreator != null;
+
+  // "task_completed" field.
+  bool? _taskCompleted;
+  bool get taskCompleted => _taskCompleted ?? false;
+  bool hasTaskCompleted() => _taskCompleted != null;
 
   void _initializeFields() {
     _taskName = snapshotData['task_name'] as String?;
     _taskDeadline = snapshotData['task_deadline'] as DateTime?;
-    _userCreated = snapshotData['user_created'] as DocumentReference?;
+    _taskDescription = snapshotData['task_description'] as String?;
+    _taskCreator = snapshotData['task_creator'] as DocumentReference?;
+    _taskCompleted = snapshotData['task_completed'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -72,13 +84,17 @@ class TodoRecord extends FirestoreRecord {
 Map<String, dynamic> createTodoRecordData({
   String? taskName,
   DateTime? taskDeadline,
-  DocumentReference? userCreated,
+  String? taskDescription,
+  DocumentReference? taskCreator,
+  bool? taskCompleted,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'task_name': taskName,
       'task_deadline': taskDeadline,
-      'user_created': userCreated,
+      'task_description': taskDescription,
+      'task_creator': taskCreator,
+      'task_completed': taskCompleted,
     }.withoutNulls,
   );
 
@@ -92,12 +108,19 @@ class TodoRecordDocumentEquality implements Equality<TodoRecord> {
   bool equals(TodoRecord? e1, TodoRecord? e2) {
     return e1?.taskName == e2?.taskName &&
         e1?.taskDeadline == e2?.taskDeadline &&
-        e1?.userCreated == e2?.userCreated;
+        e1?.taskDescription == e2?.taskDescription &&
+        e1?.taskCreator == e2?.taskCreator &&
+        e1?.taskCompleted == e2?.taskCompleted;
   }
 
   @override
-  int hash(TodoRecord? e) =>
-      const ListEquality().hash([e?.taskName, e?.taskDeadline, e?.userCreated]);
+  int hash(TodoRecord? e) => const ListEquality().hash([
+        e?.taskName,
+        e?.taskDeadline,
+        e?.taskDescription,
+        e?.taskCreator,
+        e?.taskCompleted
+      ]);
 
   @override
   bool isValidKey(Object? o) => o is TodoRecord;

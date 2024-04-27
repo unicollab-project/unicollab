@@ -16,3 +16,4 @@ export '/chat_groupwbubbles/image_details/image_details_widget.dart'
 export '/pages/video_call/video_call_widget.dart' show VideoCallWidget;
 export '/pages/video_call_page/video_call_page_widget.dart'
     show VideoCallPageWidget;
+export '/pages/task_page/task_page_widget.dart' show TaskPageWidget;

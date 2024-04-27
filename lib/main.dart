@@ -126,6 +126,7 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'chat_2_main': const Chat2MainWidget(),
+      'VirtualStudySpace': const VirtualStudySpaceWidget(),
       'UpdatePage': const UpdatePageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
@@ -151,6 +152,14 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24.0,
             ),
             label: 'Chat',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.today,
+              size: 24.0,
+            ),
+            label: 'ToDo',
             tooltip: '',
           ),
           BottomNavigationBarItem(

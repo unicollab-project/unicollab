@@ -10,6 +10,12 @@ class VirtualStudySpaceModel extends FlutterFlowModel<VirtualStudySpaceWidget> {
   FocusNode? todoItemFocusNode;
   TextEditingController? todoItemTextController;
   String? Function(BuildContext, String?)? todoItemTextControllerValidator;
+  // State field(s) for todoDescription widget.
+  FocusNode? todoDescriptionFocusNode;
+  TextEditingController? todoDescriptionTextController;
+  String? Function(BuildContext, String?)?
+      todoDescriptionTextControllerValidator;
+  DateTime? datePicked;
 
   @override
   void initState(BuildContext context) {}
@@ -19,5 +25,8 @@ class VirtualStudySpaceModel extends FlutterFlowModel<VirtualStudySpaceWidget> {
     unfocusNode.dispose();
     todoItemFocusNode?.dispose();
     todoItemTextController?.dispose();
+
+    todoDescriptionFocusNode?.dispose();
+    todoDescriptionTextController?.dispose();
   }
 }

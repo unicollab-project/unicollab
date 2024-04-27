@@ -100,7 +100,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'VirtualStudySpace',
           path: '/virtualStudySpace',
-          builder: (context, params) => const VirtualStudySpaceWidget(),
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'VirtualStudySpace')
+              : const VirtualStudySpaceWidget(),
         ),
         FFRoute(
           name: 'UpdatePage',
@@ -178,6 +180,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.String,
             ),
           ),
+        ),
+        FFRoute(
+          name: 'TaskPage',
+          path: '/taskPage',
+          builder: (context, params) => const TaskPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],
@@ -274,7 +281,7 @@ class FFParameters {
   // present is the special extra parameter reserved for the transition info.
   bool get isEmpty =>
       state.allParams.isEmpty ||
-      (state.extraMap.length == 1 &&
+      (state.allParams.length == 1 &&
           state.extraMap.containsKey(kTransitionInfoKey));
   bool isAsyncParam(MapEntry<String, dynamic> param) =>
       asyncParams.containsKey(param.key) && param.value is String;
@@ -295,10 +302,10 @@ class FFParameters {
 
   dynamic getParam<T>(
     String paramName,
-    ParamType type, [
+    ParamType type, {
     bool isList = false,
     List<String>? collectionNamePath,
-  ]) {
+  }) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
     }

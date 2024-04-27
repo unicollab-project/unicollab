@@ -41,8 +41,7 @@ class _WebRTCState extends State<WebRTC> {
       userName: widget.userName,
       callID: widget.callID,
       // You can also use groupVideo/groupVoice/oneOnOneVoice to make more types of calls.
-      config: ZegoUIKitPrebuiltCallConfig.groupVideoCall(),
-      ZegoUIKitPrebuiltCallConfig.groupVoiceCall(),
+      config: ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall(),
     );
   }
 }
