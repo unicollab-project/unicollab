@@ -159,11 +159,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'VideoCall',
-          path: '/videoCall',
-          builder: (context, params) => const VideoCallWidget(),
-        ),
-        FFRoute(
           name: 'VideoCallPage',
           path: '/videoCallPage',
           builder: (context, params) => VideoCallPageWidget(
@@ -185,6 +180,24 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'TaskPage',
           path: '/taskPage',
           builder: (context, params) => const TaskPageWidget(),
+        ),
+        FFRoute(
+          name: 'VoiceCallPage',
+          path: '/voiceCallPage',
+          builder: (context, params) => VoiceCallPageWidget(
+            callID: params.getParam(
+              'callID',
+              ParamType.String,
+            ),
+            userID: params.getParam(
+              'userID',
+              ParamType.String,
+            ),
+            userName: params.getParam(
+              'userName',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

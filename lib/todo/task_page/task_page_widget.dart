@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_button_tabbar.dart';
@@ -951,16 +952,27 @@ class _TaskPageWidgetState extends State<TaskPageWidget>
                                                                 width: 100.0,
                                                                 decoration:
                                                                     BoxDecoration(
-                                                                  color: listViewTodoRecord
-                                                                              .taskDeadline!
-                                                                              .secondsSinceEpoch <=
-                                                                          getCurrentTimestamp
-                                                                              .secondsSinceEpoch
-                                                                      ? const Color(
-                                                                          0xFF984747)
-                                                                      : FlutterFlowTheme.of(
+                                                                  color: () {
+                                                                    if (listViewTodoRecord
+                                                                            .taskDeadline!
+                                                                            .secondsSinceEpoch <
+                                                                        getCurrentTimestamp
+                                                                            .secondsSinceEpoch) {
+                                                                      return const Color(
+                                                                          0xFF984747);
+                                                                    } else if (listViewTodoRecord
+                                                                            .taskDeadline
+                                                                            ?.secondsSinceEpoch ==
+                                                                        getCurrentTimestamp
+                                                                            .secondsSinceEpoch) {
+                                                                      return const Color(
+                                                                          0x93F3C344);
+                                                                    } else {
+                                                                      return FlutterFlowTheme.of(
                                                                               context)
-                                                                          .secondaryBackground,
+                                                                          .secondaryBackground;
+                                                                    }
+                                                                  }(),
                                                                 ),
                                                                 child: Padding(
                                                                   padding: const EdgeInsetsDirectional
@@ -1197,8 +1209,21 @@ class _TaskPageWidgetState extends State<TaskPageWidget>
                                                                   0.0),
                                                       child: StreamBuilder<
                                                           List<TodoRecord>>(
-                                                        stream:
-                                                            queryTodoRecord(),
+                                                        stream: queryTodoRecord(
+                                                          queryBuilder:
+                                                              (todoRecord) =>
+                                                                  todoRecord
+                                                                      .where(
+                                                                        'task_creator',
+                                                                        isEqualTo:
+                                                                            currentUserReference,
+                                                                      )
+                                                                      .where(
+                                                                        'task_completed',
+                                                                        isEqualTo:
+                                                                            true,
+                                                                      ),
+                                                        ),
                                                         builder: (context,
                                                             snapshot) {
                                                           // Customize what your widget looks like when it's loading.

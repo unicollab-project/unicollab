@@ -57,10 +57,10 @@ class _VideoCallPageWidgetState extends State<VideoCallPageWidget> {
             children: [
               SizedBox(
                 width: double.infinity,
-                height: MediaQuery.sizeOf(context).height * 0.9,
+                height: MediaQuery.sizeOf(context).height * 1.0,
                 child: custom_widgets.WebRTC(
                   width: double.infinity,
-                  height: MediaQuery.sizeOf(context).height * 0.9,
+                  height: MediaQuery.sizeOf(context).height * 1.0,
                   callID: widget.callID!,
                   userID: widget.userID!,
                   userName: widget.userName!,

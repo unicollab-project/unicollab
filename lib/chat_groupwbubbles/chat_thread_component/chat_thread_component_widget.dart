@@ -370,8 +370,24 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                               color: FlutterFlowTheme.of(context).primaryText,
                               size: 24.0,
                             ),
-                            onPressed: () {
-                              print('IconButton pressed ...');
+                            onPressed: () async {
+                              context.pushNamed(
+                                'VoiceCallPage',
+                                queryParameters: {
+                                  'callID': serializeParam(
+                                    widget.chatRef?.groupChatId.toString(),
+                                    ParamType.String,
+                                  ),
+                                  'userID': serializeParam(
+                                    currentUserUid,
+                                    ParamType.String,
+                                  ),
+                                  'userName': serializeParam(
+                                    currentUserDisplayName,
+                                    ParamType.String,
+                                  ),
+                                }.withoutNulls,
+                              );
                             },
                           ),
                         ),
@@ -391,7 +407,23 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                               size: 24.0,
                             ),
                             onPressed: () async {
-                              context.pushNamed('VideoCall');
+                              context.pushNamed(
+                                'VideoCallPage',
+                                queryParameters: {
+                                  'callID': serializeParam(
+                                    widget.chatRef?.groupChatId.toString(),
+                                    ParamType.String,
+                                  ),
+                                  'userID': serializeParam(
+                                    currentUserUid,
+                                    ParamType.String,
+                                  ),
+                                  'userName': serializeParam(
+                                    currentUserDisplayName,
+                                    ParamType.String,
+                                  ),
+                                }.withoutNulls,
+                              );
                             },
                           ),
                         ),

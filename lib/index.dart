@@ -1,10 +1,13 @@
 // Export pages
-export '/login_page/login_page_widget.dart' show LoginPageWidget;
-export '/signup_page/signup_page_widget.dart' show SignupPageWidget;
-export '/pages/student_info/student_info_widget.dart' show StudentInfoWidget;
-export '/pages/virtual_study_space/virtual_study_space_widget.dart'
+export '/authentication/login_page/login_page_widget.dart' show LoginPageWidget;
+export '/authentication/signup_page/signup_page_widget.dart'
+    show SignupPageWidget;
+export '/authentication/student_info/student_info_widget.dart'
+    show StudentInfoWidget;
+export '/todo/virtual_study_space/virtual_study_space_widget.dart'
     show VirtualStudySpaceWidget;
-export '/update_page/update_page_widget.dart' show UpdatePageWidget;
+export '/authentication/update_page/update_page_widget.dart'
+    show UpdatePageWidget;
 export '/chat_groupwbubbles/chat_2_details/chat2_details_widget.dart'
     show Chat2DetailsWidget;
 export '/chat_groupwbubbles/chat_2_main/chat2_main_widget.dart'
@@ -13,7 +16,8 @@ export '/chat_groupwbubbles/chat_2_invite_users/chat2_invite_users_widget.dart'
     show Chat2InviteUsersWidget;
 export '/chat_groupwbubbles/image_details/image_details_widget.dart'
     show ImageDetailsWidget;
-export '/pages/video_call/video_call_widget.dart' show VideoCallWidget;
-export '/pages/video_call_page/video_call_page_widget.dart'
+export '/calling/video_call_page/video_call_page_widget.dart'
     show VideoCallPageWidget;
-export '/pages/task_page/task_page_widget.dart' show TaskPageWidget;
+export '/todo/task_page/task_page_widget.dart' show TaskPageWidget;
+export '/calling/voice_call_page/voice_call_page_widget.dart'
+    show VoiceCallPageWidget;
