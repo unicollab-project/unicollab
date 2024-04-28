@@ -114,35 +114,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'chat_2_Details',
           path: '/chat2Details',
-          asyncParams: {
-            'chatRef': getDoc(['chats'], ChatsRecord.fromSnapshot),
-          },
-          builder: (context, params) => Chat2DetailsWidget(
-            chatRef: params.getParam(
-              'chatRef',
-              ParamType.Document,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: 'chat_2_main',
-          path: '/chat2Main',
           builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'chat_2_main')
-              : const Chat2MainWidget(),
-        ),
-        FFRoute(
-          name: 'chat_2_InviteUsers',
-          path: '/chat2InviteUsers',
-          asyncParams: {
-            'chatRef': getDoc(['chats'], ChatsRecord.fromSnapshot),
-          },
-          builder: (context, params) => Chat2InviteUsersWidget(
-            chatRef: params.getParam(
-              'chatRef',
-              ParamType.Document,
-            ),
-          ),
+              ? const NavBarPage(initialPage: 'chat_2_Details')
+              : const Chat2DetailsWidget(),
         ),
         FFRoute(
           name: 'image_Details',

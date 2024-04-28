@@ -1,8 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/chat_groupwbubbles/chat_details_overlay/chat_details_overlay_widget.dart';
 import '/chat_groupwbubbles/chat_thread_component/chat_thread_component_widget.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
@@ -11,17 +9,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provider/provider.dart';
 import 'chat2_details_model.dart';
 export 'chat2_details_model.dart';
 
 class Chat2DetailsWidget extends StatefulWidget {
-  const Chat2DetailsWidget({
-    super.key,
-    required this.chatRef,
-  });
-
-  final ChatsRecord? chatRef;
+  const Chat2DetailsWidget({super.key});
 
   @override
   State<Chat2DetailsWidget> createState() => _Chat2DetailsWidgetState();
@@ -41,14 +33,7 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       unawaited(
         () async {
-          await widget.chatRef!.reference.update({
-            ...mapToFirestore(
-              {
-                'last_message_seen_by':
-                    FieldValue.arrayUnion([currentUserReference]),
-              },
-            ),
-          });
+          await currentUserDocument!.chatRef!.update(createChatsRecordData());
         }(),
       );
     });
@@ -65,8 +50,6 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -77,34 +60,8 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
-          leading: FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30.0,
-            borderWidth: 1.0,
-            buttonSize: 60.0,
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: FlutterFlowTheme.of(context).primaryText,
-              size: 30.0,
-            ),
-            onPressed: () async {
-              context.goNamed(
-                'chat_2_main',
-                extra: <String, dynamic>{
-                  kTransitionInfoKey: const TransitionInfo(
-                    hasTransition: true,
-                    transitionType: PageTransitionType.leftToRight,
-                    duration: Duration(milliseconds: 230),
-                  ),
-                },
-              );
-            },
-          ),
           title: FutureBuilder<UsersRecord>(
-            future: UsersRecord.getDocumentOnce(widget.chatRef!.users
-                .where((e) => e != currentUserReference)
-                .toList()
-                .first),
+            future: UsersRecord.getDocumentOnce(currentUserReference!),
             builder: (context, snapshot) {
               // Customize what your widget looks like when it's loading.
               if (!snapshot.hasData) {
@@ -122,7 +79,7 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
               final conditionalBuilderUsersRecord = snapshot.data!;
               return Builder(
                 builder: (context) {
-                  if (widget.chatRef!.users.length <= 2) {
+                  if (true == false) {
                     return Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -218,11 +175,8 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
                                 Align(
                                   alignment: const AlignmentDirectional(1.0, 1.0),
                                   child: FutureBuilder<UsersRecord>(
-                                    future: UsersRecord.getDocumentOnce(widget
-                                        .chatRef!.users
-                                        .where((e) => e != currentUserReference)
-                                        .toList()
-                                        .last),
+                                    future: UsersRecord.getDocumentOnce(
+                                        currentUserReference!),
                                     builder: (context, snapshot) {
                                       // Customize what your widget looks like when it's loading.
                                       if (!snapshot.hasData) {
@@ -418,41 +372,41 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
                           ),
                         ),
                         Expanded(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                valueOrDefault<String>(
-                                  FFAppState().chats?.id,
-                                  'College Group',
+                          child: Align(
+                            alignment: const AlignmentDirectional(0.0, 0.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AuthUserStreamWidget(
+                                  builder: (context) => Text(
+                                    valueOrDefault(
+                                        currentUserDocument?.collegeName, ''),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .override(
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
                                 ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyLarge
-                                    .override(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 4.0, 0.0, 0.0),
-                                child: Text(
-                                  '${valueOrDefault<String>(
-                                    widget.chatRef?.users.length.toString(),
-                                    '2',
-                                  )} members',
-                                  style: FlutterFlowTheme.of(context)
-                                      .labelSmall
-                                      .override(
-                                        fontFamily: 'Plus Jakarta Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        letterSpacing: 0.0,
-                                      ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 4.0, 0.0, 0.0),
+                                  child: Text(
+                                    conditionalBuilderUsersRecord.branchName,
+                                    style: FlutterFlowTheme.of(context)
+                                        .labelSmall
+                                        .override(
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -462,45 +416,7 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
               );
             },
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 16.0, 8.0),
-              child: FlutterFlowIconButton(
-                borderColor: FlutterFlowTheme.of(context).alternate,
-                borderRadius: 12.0,
-                borderWidth: 2.0,
-                buttonSize: 40.0,
-                fillColor: FlutterFlowTheme.of(context).primaryBackground,
-                icon: Icon(
-                  Icons.more_vert,
-                  color: FlutterFlowTheme.of(context).primaryText,
-                  size: 24.0,
-                ),
-                onPressed: () async {
-                  await showModalBottomSheet(
-                    isScrollControlled: true,
-                    backgroundColor: FlutterFlowTheme.of(context).accent4,
-                    barrierColor: const Color(0x00FFFFFF),
-                    context: context,
-                    builder: (context) {
-                      return GestureDetector(
-                        onTap: () => _model.unfocusNode.canRequestFocus
-                            ? FocusScope.of(context)
-                                .requestFocus(_model.unfocusNode)
-                            : FocusScope.of(context).unfocus(),
-                        child: Padding(
-                          padding: MediaQuery.viewInsetsOf(context),
-                          child: ChatDetailsOverlayWidget(
-                            chatRef: widget.chatRef!,
-                          ),
-                        ),
-                      );
-                    },
-                  ).then((value) => safeSetState(() {}));
-                },
-              ),
-            ),
-          ],
+          actions: const [],
           centerTitle: false,
           elevation: 0.0,
         ),
@@ -509,10 +425,7 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
           child: wrapWithModel(
             model: _model.chatThreadComponentModel,
             updateCallback: () => setState(() {}),
-            updateOnChange: true,
-            child: ChatThreadComponentWidget(
-              chatRef: widget.chatRef,
-            ),
+            child: const ChatThreadComponentWidget(),
           ),
         ),
       ),

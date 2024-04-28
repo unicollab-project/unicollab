@@ -10,10 +10,6 @@ export '/authentication/update_page/update_page_widget.dart'
     show UpdatePageWidget;
 export '/chat_groupwbubbles/chat_2_details/chat2_details_widget.dart'
     show Chat2DetailsWidget;
-export '/chat_groupwbubbles/chat_2_main/chat2_main_widget.dart'
-    show Chat2MainWidget;
-export '/chat_groupwbubbles/chat_2_invite_users/chat2_invite_users_widget.dart'
-    show Chat2InviteUsersWidget;
 export '/chat_groupwbubbles/image_details/image_details_widget.dart'
     show ImageDetailsWidget;
 export '/calling/video_call_page/video_call_page_widget.dart'

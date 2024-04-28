@@ -1,4 +1,3 @@
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -9,6 +8,7 @@ import 'auth/firebase_auth/auth_util.dart';
 import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
+import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
 
 void main() async {
@@ -19,13 +19,7 @@ void main() async {
 
   await FlutterFlowTheme.initialize();
 
-  final appState = FFAppState(); // Initialize FFAppState
-  await appState.initializePersistedState();
-
-  runApp(ChangeNotifierProvider(
-    create: (context) => appState,
-    child: const MyApp(),
-  ));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -112,7 +106,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'chat_2_main';
+  String _currentPageName = 'chat_2_Details';
   late Widget? _currentPage;
 
   @override
@@ -125,7 +119,7 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'chat_2_main': const Chat2MainWidget(),
+      'chat_2_Details': const Chat2DetailsWidget(),
       'VirtualStudySpace': const VirtualStudySpaceWidget(),
       'UpdatePage': const UpdatePageWidget(),
     };
@@ -148,10 +142,10 @@ class _NavBarPageState extends State<NavBarPage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.cottage,
+              Icons.home_outlined,
               size: 24.0,
             ),
-            label: 'Chat',
+            label: 'Home',
             tooltip: '',
           ),
           BottomNavigationBarItem(
