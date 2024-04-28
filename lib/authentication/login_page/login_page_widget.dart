@@ -351,7 +351,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                                   }
 
                                   context.pushNamedAuth(
-                                      'chat_2_Details', context.mounted);
+                                      'chat_2_main', context.mounted);
                                 },
                                 text: 'Log In',
                                 options: FFButtonOptions(
@@ -405,7 +405,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                                   }
 
                                   context.pushNamedAuth(
-                                      'chat_2_Details', context.mounted);
+                                      'chat_2_main', context.mounted);
                                 },
                                 text: 'Continue with Google',
                                 icon: const FaIcon(

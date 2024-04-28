@@ -31,6 +31,7 @@ class ChatThreadComponentModel
   ///  State fields for stateful widgets in this component.
 
   final formKey = GlobalKey<FormState>();
+  List<ChatMessagesRecord>? listViewPreviousSnapshot;
   // Models for chat_threadUpdate dynamic component.
   late FlutterFlowDynamicModels<ChatThreadUpdateModel> chatThreadUpdateModels;
   bool isDataUploading = false;

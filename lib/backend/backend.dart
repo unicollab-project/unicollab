@@ -11,6 +11,7 @@ import 'schema/states_record.dart';
 import 'schema/cities_record.dart';
 import 'schema/branch_record.dart';
 import 'schema/college_names_record.dart';
+import 'schema/groups_record.dart';
 import 'schema/chat_messages_record.dart';
 import 'schema/chats_record.dart';
 
@@ -27,6 +28,7 @@ export 'schema/states_record.dart';
 export 'schema/cities_record.dart';
 export 'schema/branch_record.dart';
 export 'schema/college_names_record.dart';
+export 'schema/groups_record.dart';
 export 'schema/chat_messages_record.dart';
 export 'schema/chats_record.dart';
 
@@ -247,6 +249,43 @@ Future<List<CollegeNamesRecord>> queryCollegeNamesRecordOnce({
     queryCollectionOnce(
       CollegeNamesRecord.collection,
       CollegeNamesRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query GroupsRecords (as a Stream and as a Future).
+Future<int> queryGroupsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      GroupsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<GroupsRecord>> queryGroupsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      GroupsRecord.collection,
+      GroupsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<GroupsRecord>> queryGroupsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      GroupsRecord.collection,
+      GroupsRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

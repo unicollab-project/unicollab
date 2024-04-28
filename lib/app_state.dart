@@ -22,6 +22,12 @@ class FFAppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  DocumentReference? _chats;
+  DocumentReference? get chats => _chats;
+  set chats(DocumentReference? value) {
+    _chats = value;
+  }
+
   final _userDocQueryManager = FutureRequestManager<UsersRecord>();
   Future<UsersRecord> userDocQuery({
     String? uniqueQueryKey,

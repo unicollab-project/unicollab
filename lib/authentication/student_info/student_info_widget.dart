@@ -121,10 +121,11 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                     ),
                     alignment: const AlignmentDirectional(0.0, 0.0),
                     child: Text(
-                      'Your Details',
+                      'Your Details 📒',
                       style: FlutterFlowTheme.of(context).displaySmall.override(
                             fontFamily: 'Urbanist',
                             color: Colors.white,
+                            fontSize: 29.0,
                             letterSpacing: 0.0,
                           ),
                     ),
@@ -155,557 +156,521 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                       alignment: const AlignmentDirectional(0.0, 0.0),
                       child: Padding(
                         padding: const EdgeInsets.all(32.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 12.0, 0.0, 24.0),
-                              child: Text(
-                                'Fill out the information below in order to create your account.',
-                                textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 16.0),
-                              child: StreamBuilder<List<StatesRecord>>(
-                                stream: queryStatesRecord(),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 40.0,
-                                        height: 40.0,
-                                        child: SpinKitFoldingCube(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          size: 40.0,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  List<StatesRecord> stateNameStatesRecordList =
-                                      snapshot.data!;
-                                  return FlutterFlowDropDown<String>(
-                                    controller:
-                                        _model.stateNameValueController ??=
-                                            FormFieldController<String>(null),
-                                    options: stateNameStatesRecordList
-                                        .map((e) => e.stateRef)
-                                        .toList(),
-                                    onChanged: (val) => setState(
-                                        () => _model.stateNameValue = val),
-                                    width: 300.0,
-                                    height: 56.0,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyLarge
-                                        .override(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          letterSpacing: 0.0,
-                                        ),
-                                    hintText: 'Select State ...',
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
-                                    ),
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    elevation: 2.0,
-                                    borderColor:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    borderWidth: 2.0,
-                                    borderRadius: 8.0,
-                                    margin: const EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 4.0, 16.0, 4.0),
-                                    hidesUnderline: true,
-                                    isOverButton: true,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
-                                  );
-                                },
-                              ),
-                            ),
-                            if (_model.stateNameValue != null &&
-                                _model.stateNameValue != '')
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 16.0),
-                                child: StreamBuilder<List<CitiesRecord>>(
-                                  stream: queryCitiesRecord(
-                                    queryBuilder: (citiesRecord) =>
-                                        citiesRecord.where(
-                                      'state_ref',
-                                      isEqualTo: _model.stateNameValue,
-                                    ),
+                        child: StreamBuilder<List<ChatsRecord>>(
+                          stream: queryChatsRecord(
+                            singleRecord: true,
+                          ),
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 40.0,
+                                  height: 40.0,
+                                  child: SpinKitFoldingCube(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    size: 40.0,
                                   ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 40.0,
-                                          height: 40.0,
-                                          child: SpinKitFoldingCube(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            size: 40.0,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    List<CitiesRecord>
-                                        cityNameCitiesRecordList =
-                                        snapshot.data!;
-                                    return FlutterFlowDropDown<String>(
-                                      controller:
-                                          _model.cityNameValueController ??=
-                                              FormFieldController<String>(null),
-                                      options: cityNameCitiesRecordList
-                                          .map((e) => e.cityName)
-                                          .toList(),
-                                      onChanged: (val) => setState(
-                                          () => _model.cityNameValue = val),
-                                      width: 300.0,
-                                      height: 56.0,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .bodyLarge
-                                          .override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            letterSpacing: 0.0,
-                                          ),
-                                      hintText: 'Select City ...',
-                                      icon: Icon(
-                                        Icons.keyboard_arrow_down_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        size: 24.0,
-                                      ),
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
-                                      elevation: 2.0,
-                                      borderColor: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      borderWidth: 2.0,
-                                      borderRadius: 8.0,
-                                      margin: const EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 4.0, 16.0, 4.0),
-                                      hidesUnderline: true,
-                                      isOverButton: true,
-                                      isSearchable: false,
-                                      isMultiSelect: false,
-                                    );
-                                  },
                                 ),
-                              ),
-                            if (_model.cityNameValue != null &&
-                                _model.cityNameValue != '')
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 16.0),
-                                child: StreamBuilder<List<CollegeNamesRecord>>(
-                                  stream: queryCollegeNamesRecord(
-                                    queryBuilder: (collegeNamesRecord) =>
-                                        collegeNamesRecord.where(
-                                      'city_ref',
-                                      isEqualTo: _model.cityNameValue,
-                                    ),
-                                  ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 40.0,
-                                          height: 40.0,
-                                          child: SpinKitFoldingCube(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            size: 40.0,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    List<CollegeNamesRecord>
-                                        collegeNameCollegeNamesRecordList =
-                                        snapshot.data!;
-                                    return FlutterFlowDropDown<String>(
-                                      controller:
-                                          _model.collegeNameValueController ??=
-                                              FormFieldController<String>(null),
-                                      options: collegeNameCollegeNamesRecordList
-                                          .map((e) => e.collegeName)
-                                          .toList(),
-                                      onChanged: (val) => setState(
-                                          () => _model.collegeNameValue = val),
-                                      width: 300.0,
-                                      height: 56.0,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .bodyLarge
-                                          .override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            letterSpacing: 0.0,
-                                          ),
-                                      hintText: 'Select College ...',
-                                      icon: Icon(
-                                        Icons.keyboard_arrow_down_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        size: 24.0,
-                                      ),
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
-                                      elevation: 2.0,
-                                      borderColor: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      borderWidth: 2.0,
-                                      borderRadius: 8.0,
-                                      margin: const EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 4.0, 16.0, 4.0),
-                                      hidesUnderline: true,
-                                      isOverButton: true,
-                                      isSearchable: false,
-                                      isMultiSelect: false,
-                                    );
-                                  },
-                                ),
-                              ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 16.0),
-                              child: StreamBuilder<List<BranchRecord>>(
-                                stream: queryBranchRecord(),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 40.0,
-                                        height: 40.0,
-                                        child: SpinKitFoldingCube(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          size: 40.0,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  List<BranchRecord>
-                                      branchNameBranchRecordList =
-                                      snapshot.data!;
-                                  return FlutterFlowDropDown<String>(
-                                    controller:
-                                        _model.branchNameValueController ??=
-                                            FormFieldController<String>(null),
-                                    options: branchNameBranchRecordList
-                                        .map((e) => e.branchName)
-                                        .toList(),
-                                    onChanged: (val) => setState(
-                                        () => _model.branchNameValue = val),
-                                    width: 300.0,
-                                    height: 56.0,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyLarge
-                                        .override(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          letterSpacing: 0.0,
-                                        ),
-                                    hintText: 'Select Branch ...',
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
-                                    ),
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    elevation: 2.0,
-                                    borderColor:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    borderWidth: 2.0,
-                                    borderRadius: 8.0,
-                                    margin: const EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 4.0, 16.0, 4.0),
-                                    hidesUnderline: true,
-                                    isOverButton: true,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
-                                  );
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 16.0),
-                              child: SizedBox(
-                                width: double.infinity,
-                                child: TextFormField(
-                                  controller: _model.phoneNumberTextController,
-                                  focusNode: _model.phoneNumberFocusNode,
-                                  autofocus: true,
-                                  autofillHints: const [
-                                    AutofillHints.telephoneNumber
-                                  ],
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    labelText: 'Phone No.',
-                                    labelStyle: FlutterFlowTheme.of(context)
-                                        .labelLarge
+                              );
+                            }
+                            List<ChatsRecord> columnChatsRecordList =
+                                snapshot.data!;
+                            // Return an empty Container when the item does not exist.
+                            if (snapshot.data!.isEmpty) {
+                              return Container();
+                            }
+                            final columnChatsRecord =
+                                columnChatsRecordList.isNotEmpty
+                                    ? columnChatsRecordList.first
+                                    : null;
+                            return Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 12.0, 0.0, 24.0),
+                                  child: Text(
+                                    'Fill out the information below in order to create your account.',
+                                    textAlign: TextAlign.center,
+                                    style: FlutterFlowTheme.of(context)
+                                        .labelMedium
                                         .override(
                                           fontFamily: 'Plus Jakarta Sans',
                                           letterSpacing: 0.0,
                                         ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryBackground,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    filled: true,
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    prefixIcon: const Icon(
-                                      Icons.phone_sharp,
-                                      size: 22.0,
-                                    ),
                                   ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyLarge
-                                      .override(
-                                        fontFamily: 'Plus Jakarta Sans',
-                                        letterSpacing: 0.0,
-                                      ),
-                                  maxLength: 10,
-                                  maxLengthEnforcement:
-                                      MaxLengthEnforcement.enforced,
-                                  buildCounter: (context,
-                                          {required currentLength,
-                                          required isFocused,
-                                          maxLength}) =>
-                                      null,
-                                  keyboardType: TextInputType.emailAddress,
-                                  validator: _model
-                                      .phoneNumberTextControllerValidator
-                                      .asValidator(context),
                                 ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 16.0),
-                              child: StreamBuilder<UsersRecord>(
-                                stream: UsersRecord.getDocument(
-                                    currentUserReference!),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 40.0,
-                                        height: 40.0,
-                                        child: SpinKitFoldingCube(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          size: 40.0,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  final buttonUsersRecord = snapshot.data!;
-                                  return FFButtonWidget(
-                                    onPressed: () async {
-                                      await buttonUsersRecord.reference
-                                          .update(createUsersRecordData(
-                                        collegeState: _model.stateNameValue,
-                                        collegeCity: _model.cityNameValue,
-                                        collegeName: _model.collegeNameValue,
-                                        branchName: _model.branchNameValue,
-                                        phoneNumber: _model
-                                            .phoneNumberTextController.text,
-                                        photoUrl:
-                                            'https://e7.pngegg.com/pngimages/980/304/png-clipart-computer-icons-user-profile-avatar-heroes-silhouette-thumbnail.png',
-                                      ));
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'User Added',
-                                            style: TextStyle(
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 16.0),
+                                  child: StreamBuilder<List<StatesRecord>>(
+                                    stream: queryStatesRecord(),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 40.0,
+                                            height: 40.0,
+                                            child: SpinKitFoldingCube(
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryText,
+                                                      .primary,
+                                              size: 40.0,
                                             ),
                                           ),
-                                          duration:
-                                              const Duration(milliseconds: 4000),
-                                          backgroundColor:
+                                        );
+                                      }
+                                      List<StatesRecord>
+                                          stateNameStatesRecordList =
+                                          snapshot.data!;
+                                      return FlutterFlowDropDown<String>(
+                                        controller: _model
+                                                .stateNameValueController ??=
+                                            FormFieldController<String>(null),
+                                        options: stateNameStatesRecordList
+                                            .map((e) => e.stateRef)
+                                            .toList(),
+                                        onChanged: (val) => setState(
+                                            () => _model.stateNameValue = val),
+                                        width: 300.0,
+                                        height: 56.0,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .bodyLarge
+                                            .override(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              letterSpacing: 0.0,
+                                            ),
+                                        hintText: 'Select State ...',
+                                        icon: Icon(
+                                          Icons.keyboard_arrow_down_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 24.0,
+                                        ),
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .primaryBackground,
+                                        elevation: 2.0,
+                                        borderColor:
+                                            FlutterFlowTheme.of(context)
+                                                .alternate,
+                                        borderWidth: 2.0,
+                                        borderRadius: 8.0,
+                                        margin: const EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 4.0, 16.0, 4.0),
+                                        hidesUnderline: true,
+                                        isOverButton: true,
+                                        isSearchable: false,
+                                        isMultiSelect: false,
+                                      );
+                                    },
+                                  ),
+                                ),
+                                if (_model.stateNameValue != null &&
+                                    _model.stateNameValue != '')
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 16.0),
+                                    child: StreamBuilder<List<CitiesRecord>>(
+                                      stream: queryCitiesRecord(
+                                        queryBuilder: (citiesRecord) =>
+                                            citiesRecord.where(
+                                          'state_ref',
+                                          isEqualTo: _model.stateNameValue,
+                                        ),
+                                      ),
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 40.0,
+                                              height: 40.0,
+                                              child: SpinKitFoldingCube(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                size: 40.0,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                        List<CitiesRecord>
+                                            cityNameCitiesRecordList =
+                                            snapshot.data!;
+                                        return FlutterFlowDropDown<String>(
+                                          controller: _model
+                                                  .cityNameValueController ??=
+                                              FormFieldController<String>(null),
+                                          options: cityNameCitiesRecordList
+                                              .map((e) => e.cityName)
+                                              .toList(),
+                                          onChanged: (val) => setState(
+                                              () => _model.cityNameValue = val),
+                                          width: 300.0,
+                                          height: 56.0,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .bodyLarge
+                                              .override(
+                                                fontFamily: 'Plus Jakarta Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                letterSpacing: 0.0,
+                                              ),
+                                          hintText: 'Select City ...',
+                                          icon: Icon(
+                                            Icons.keyboard_arrow_down_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 24.0,
+                                          ),
+                                          fillColor:
                                               FlutterFlowTheme.of(context)
-                                                  .secondary,
+                                                  .primaryBackground,
+                                          elevation: 2.0,
+                                          borderColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .alternate,
+                                          borderWidth: 2.0,
+                                          borderRadius: 8.0,
+                                          margin:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  16.0, 4.0, 16.0, 4.0),
+                                          hidesUnderline: true,
+                                          isOverButton: true,
+                                          isSearchable: false,
+                                          isMultiSelect: false,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                if (_model.cityNameValue != null &&
+                                    _model.cityNameValue != '')
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 16.0),
+                                    child:
+                                        StreamBuilder<List<CollegeNamesRecord>>(
+                                      stream: queryCollegeNamesRecord(
+                                        queryBuilder: (collegeNamesRecord) =>
+                                            collegeNamesRecord.where(
+                                          'city_ref',
+                                          isEqualTo: _model.cityNameValue,
+                                        ),
+                                      ),
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 40.0,
+                                              height: 40.0,
+                                              child: SpinKitFoldingCube(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                size: 40.0,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                        List<CollegeNamesRecord>
+                                            collegeNameCollegeNamesRecordList =
+                                            snapshot.data!;
+                                        return FlutterFlowDropDown<String>(
+                                          controller: _model
+                                                  .collegeNameValueController ??=
+                                              FormFieldController<String>(null),
+                                          options:
+                                              collegeNameCollegeNamesRecordList
+                                                  .map((e) => e.collegeName)
+                                                  .toList(),
+                                          onChanged: (val) => setState(() =>
+                                              _model.collegeNameValue = val),
+                                          width: 300.0,
+                                          height: 56.0,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .bodyLarge
+                                              .override(
+                                                fontFamily: 'Plus Jakarta Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                letterSpacing: 0.0,
+                                              ),
+                                          hintText: 'Select College ...',
+                                          icon: Icon(
+                                            Icons.keyboard_arrow_down_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 24.0,
+                                          ),
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primaryBackground,
+                                          elevation: 2.0,
+                                          borderColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .alternate,
+                                          borderWidth: 2.0,
+                                          borderRadius: 8.0,
+                                          margin:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  16.0, 4.0, 16.0, 4.0),
+                                          hidesUnderline: true,
+                                          isOverButton: true,
+                                          isSearchable: false,
+                                          isMultiSelect: false,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 16.0),
+                                  child: StreamBuilder<List<BranchRecord>>(
+                                    stream: queryBranchRecord(),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 40.0,
+                                            height: 40.0,
+                                            child: SpinKitFoldingCube(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              size: 40.0,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      List<BranchRecord>
+                                          branchNameBranchRecordList =
+                                          snapshot.data!;
+                                      return FlutterFlowDropDown<String>(
+                                        controller: _model
+                                                .branchNameValueController ??=
+                                            FormFieldController<String>(null),
+                                        options: branchNameBranchRecordList
+                                            .map((e) => e.branchName)
+                                            .toList(),
+                                        onChanged: (val) => setState(
+                                            () => _model.branchNameValue = val),
+                                        width: 300.0,
+                                        height: 56.0,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .bodyLarge
+                                            .override(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              letterSpacing: 0.0,
+                                            ),
+                                        hintText: 'Select Branch ...',
+                                        icon: Icon(
+                                          Icons.keyboard_arrow_down_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 24.0,
+                                        ),
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .primaryBackground,
+                                        elevation: 2.0,
+                                        borderColor:
+                                            FlutterFlowTheme.of(context)
+                                                .alternate,
+                                        borderWidth: 2.0,
+                                        borderRadius: 8.0,
+                                        margin: const EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 4.0, 16.0, 4.0),
+                                        hidesUnderline: true,
+                                        isOverButton: true,
+                                        isSearchable: false,
+                                        isMultiSelect: false,
+                                      );
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 16.0),
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    child: TextFormField(
+                                      controller:
+                                          _model.phoneNumberTextController,
+                                      focusNode: _model.phoneNumberFocusNode,
+                                      autofocus: true,
+                                      autofillHints: const [
+                                        AutofillHints.telephoneNumber
+                                      ],
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        labelText: 'Phone No.',
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .labelLarge
+                                            .override(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryBackground,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                        filled: true,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .primaryBackground,
+                                        prefixIcon: const Icon(
+                                          Icons.phone_sharp,
+                                          size: 22.0,
+                                        ),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyLarge
+                                          .override(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      maxLength: 10,
+                                      maxLengthEnforcement:
+                                          MaxLengthEnforcement.enforced,
+                                      buildCounter: (context,
+                                              {required currentLength,
+                                              required isFocused,
+                                              maxLength}) =>
+                                          null,
+                                      keyboardType: TextInputType.emailAddress,
+                                      validator: _model
+                                          .phoneNumberTextControllerValidator
+                                          .asValidator(context),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 16.0),
+                                  child: StreamBuilder<UsersRecord>(
+                                    stream: UsersRecord.getDocument(
+                                        currentUserReference!),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 40.0,
+                                            height: 40.0,
+                                            child: SpinKitFoldingCube(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              size: 40.0,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      final buttonUsersRecord = snapshot.data!;
+                                      return FFButtonWidget(
+                                        onPressed: () async {
+                                          await buttonUsersRecord.reference
+                                              .update(createUsersRecordData(
+                                            collegeState: _model.stateNameValue,
+                                            collegeCity: _model.cityNameValue,
+                                            collegeName:
+                                                _model.collegeNameValue,
+                                            branchName: _model.branchNameValue,
+                                            phoneNumber: _model
+                                                .phoneNumberTextController.text,
+                                            photoUrl:
+                                                'https://e7.pngegg.com/pngimages/980/304/png-clipart-computer-icons-user-profile-avatar-heroes-silhouette-thumbnail.png',
+                                          ));
+                                          if ((columnChatsRecord?.groupName ==
+                                                  _model.collegeNameValue) &&
+                                              (columnChatsRecord?.branchName ==
+                                                  _model.branchNameValue)) {
+                                            return;
+                                          }
+
+                                          context.pushNamed('chat_2_main');
+                                        },
+                                        text: 'Sign Up',
+                                        options: FFButtonOptions(
+                                          width: double.infinity,
+                                          height: 44.0,
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          iconPadding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          textStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .override(
+                                                    fontFamily:
+                                                        'Plus Jakarta Sans',
+                                                    color: Colors.white,
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          elevation: 3.0,
+                                          borderSide: const BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
                                         ),
                                       );
                                     },
-                                    text: 'Sign Up',
-                                    options: FFButtonOptions(
-                                      width: double.infinity,
-                                      height: 44.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
-                                      iconPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 0.0),
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: Colors.white,
-                                            letterSpacing: 0.0,
-                                          ),
-                                      elevation: 3.0,
-                                      borderSide: const BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 16.0),
-                              child: StreamBuilder<List<ChatsRecord>>(
-                                stream: queryChatsRecord(
-                                  singleRecord: true,
+                                  ),
                                 ),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 40.0,
-                                        height: 40.0,
-                                        child: SpinKitFoldingCube(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          size: 40.0,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  List<ChatsRecord> buttonChatsRecordList =
-                                      snapshot.data!;
-                                  // Return an empty Container when the item does not exist.
-                                  if (snapshot.data!.isEmpty) {
-                                    return Container();
-                                  }
-                                  final buttonChatsRecord =
-                                      buttonChatsRecordList.isNotEmpty
-                                          ? buttonChatsRecordList.first
-                                          : null;
-                                  return FFButtonWidget(
-                                    onPressed: () async {
-                                      if ((buttonChatsRecord?.groupName ==
-                                              _model.collegeNameValue) &&
-                                          (buttonChatsRecord?.groupBranch ==
-                                              _model.branchNameValue)) {
-                                        await buttonChatsRecord!.reference
-                                            .update({
-                                          ...mapToFirestore(
-                                            {
-                                              'users': FieldValue.arrayUnion(
-                                                  [currentUserReference]),
-                                            },
-                                          ),
-                                        });
-                                      } else {
-                                        await ChatsRecord.collection.doc().set({
-                                          ...mapToFirestore(
-                                            {
-                                              'users': [currentUserReference],
-                                            },
-                                          ),
-                                        });
-                                      }
-
-                                      context.pushNamed('chat_2_Details');
-                                    },
-                                    text: 'Join Group',
-                                    options: FFButtonOptions(
-                                      width: double.infinity,
-                                      height: 44.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
-                                      iconPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 0.0),
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: Colors.white,
-                                            letterSpacing: 0.0,
-                                          ),
-                                      elevation: 3.0,
-                                      borderSide: const BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
+                              ],
+                            );
+                          },
                         ),
                       ),
                     ),
