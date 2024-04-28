@@ -633,7 +633,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                             return;
                                           }
 
-                                          context.pushNamed('chat_2_main');
+                                          context.goNamed('chat_2_main');
                                         },
                                         text: 'Sign Up',
                                         options: FFButtonOptions(
