@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
-class WebRTC extends StatefulWidget {
-  const WebRTC({
+class CallRTC extends StatefulWidget {
+  const CallRTC({
     super.key,
     this.width,
     this.height,
@@ -26,10 +26,10 @@ class WebRTC extends StatefulWidget {
   final String userName;
 
   @override
-  State<WebRTC> createState() => _WebRTCState();
+  State<CallRTC> createState() => _CallRTCState();
 }
 
-class _WebRTCState extends State<WebRTC> {
+class _CallRTCState extends State<CallRTC> {
   @override
   Widget build(BuildContext context) {
     return ZegoUIKitPrebuiltCall(
