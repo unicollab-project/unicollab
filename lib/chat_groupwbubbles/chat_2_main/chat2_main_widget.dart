@@ -52,7 +52,7 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
           title: Align(
             alignment: const AlignmentDirectional(0.0, -1.0),
             child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 0.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(5.0, 15.0, 0.0, 5.0),
               child: Text(
                 'Home Page 🏠',
                 style: FlutterFlowTheme.of(context).headlineLarge.override(
@@ -73,7 +73,7 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 0.0, 4.0),
                 child: Text(
                   'Below is your group and your to-do list...',
                   style: FlutterFlowTheme.of(context).labelMedium.override(
