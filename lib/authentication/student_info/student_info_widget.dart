@@ -576,78 +576,6 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                         photoUrl:
                                             'https://e7.pngegg.com/pngimages/980/304/png-clipart-computer-icons-user-profile-avatar-heroes-silhouette-thumbnail.png',
                                       ));
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'User Added',
-                                            style: TextStyle(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                            ),
-                                          ),
-                                          duration:
-                                              const Duration(milliseconds: 3000),
-                                          backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondary,
-                                        ),
-                                      );
-                                    },
-                                    text: 'Sign Up',
-                                    options: FFButtonOptions(
-                                      width: double.infinity,
-                                      height: 44.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
-                                      iconPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 0.0),
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: Colors.white,
-                                            letterSpacing: 0.0,
-                                          ),
-                                      elevation: 3.0,
-                                      borderSide: const BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 16.0),
-                              child: StreamBuilder<List<ChatsRecord>>(
-                                stream: queryChatsRecord(),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 40.0,
-                                        height: 40.0,
-                                        child: SpinKitFoldingCube(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          size: 40.0,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  List<ChatsRecord> buttonChatsRecordList =
-                                      snapshot.data!;
-                                  return FFButtonWidget(
-                                    onPressed: () async {
                                       _model.foundGroup =
                                           await queryChatsRecordOnce(
                                         queryBuilder: (chatsRecord) =>
@@ -667,29 +595,14 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                       if (_model.foundGroup?.groupName ==
                                               null ||
                                           _model.foundGroup?.groupName == '') {
-                                        await _model.foundGroup!.reference
-                                            .update({
-                                          ...createChatsRecordData(
-                                            userA: currentUserReference,
-                                          ),
-                                          ...mapToFirestore(
-                                            {
-                                              'users': FieldValue.arrayUnion(
-                                                  [currentUserReference]),
-                                            },
-                                          ),
-                                        });
-
-                                        context.pushNamed('chat_2_main');
-                                      } else {
                                         await ChatsRecord.collection.doc().set({
                                           ...createChatsRecordData(
-                                            userA: currentUserReference,
-                                            lastMessage: '',
+                                            userA: buttonUsersRecord.reference,
+                                            lastMessage: 'Hey there!!',
                                             lastMessageTime:
                                                 getCurrentTimestamp,
                                             lastMessageSentBy:
-                                                currentUserReference,
+                                                buttonUsersRecord.reference,
                                             groupChatId:
                                                 random_data.randomInteger(
                                                     1000000, 9999999),
@@ -698,7 +611,22 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                           ),
                                           ...mapToFirestore(
                                             {
-                                              'users': [currentUserReference],
+                                              'users': [
+                                                buttonUsersRecord.reference
+                                              ],
+                                            },
+                                          ),
+                                        });
+
+                                        context.pushNamed('chat_2_main');
+                                      } else {
+                                        await _model.foundGroup!.reference
+                                            .update({
+                                          ...mapToFirestore(
+                                            {
+                                              'users': FieldValue.arrayUnion([
+                                                buttonUsersRecord.reference
+                                              ]),
                                             },
                                           ),
                                         });
@@ -708,7 +636,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
 
                                       setState(() {});
                                     },
-                                    text: 'Join Your Group',
+                                    text: 'Sign Up',
                                     options: FFButtonOptions(
                                       width: double.infinity,
                                       height: 44.0,
