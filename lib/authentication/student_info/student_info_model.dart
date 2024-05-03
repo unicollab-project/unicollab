@@ -26,8 +26,6 @@ class StudentInfoModel extends FlutterFlowModel<StudentInfoWidget> {
   String? Function(BuildContext, String?)? phoneNumberTextControllerValidator;
   // Stores action output result for [Firestore Query - Query a collection] action in Button widget.
   ChatsRecord? foundGroup;
-  // Stores action output result for [Backend Call - Create Document] action in Button widget.
-  ChatsRecord? newChatThread;
 
   @override
   void initState(BuildContext context) {}

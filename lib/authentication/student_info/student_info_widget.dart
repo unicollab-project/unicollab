@@ -682,9 +682,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
 
                                         context.pushNamed('chat_2_main');
                                       } else {
-                                        var chatsRecordReference =
-                                            ChatsRecord.collection.doc();
-                                        await chatsRecordReference.set({
+                                        await ChatsRecord.collection.doc().set({
                                           ...createChatsRecordData(
                                             userA: currentUserReference,
                                             lastMessage: '',
@@ -704,27 +702,6 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                             },
                                           ),
                                         });
-                                        _model.newChatThread =
-                                            ChatsRecord.getDocumentFromData({
-                                          ...createChatsRecordData(
-                                            userA: currentUserReference,
-                                            lastMessage: '',
-                                            lastMessageTime:
-                                                getCurrentTimestamp,
-                                            lastMessageSentBy:
-                                                currentUserReference,
-                                            groupChatId:
-                                                random_data.randomInteger(
-                                                    1000000, 9999999),
-                                            groupName: _model.collegeNameValue,
-                                            branchName: _model.branchNameValue,
-                                          ),
-                                          ...mapToFirestore(
-                                            {
-                                              'users': [currentUserReference],
-                                            },
-                                          ),
-                                        }, chatsRecordReference);
 
                                         context.pushNamed('chat_2_main');
                                       }
