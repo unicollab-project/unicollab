@@ -10,7 +10,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provider/provider.dart';
 import 'chat2_details_model.dart';
 export 'chat2_details_model.dart';
 
@@ -64,8 +63,6 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -164,10 +161,7 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                valueOrDefault<String>(
-                                  conditionalBuilderUsersRecord.displayName,
-                                  'Ghost User',
-                                ),
+                                conditionalBuilderUsersRecord.collegeName,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyLarge
                                     .override(
@@ -180,7 +174,7 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
                                     0.0, 4.0, 0.0, 0.0),
                                 child: AutoSizeText(
                                   valueOrDefault<String>(
-                                    conditionalBuilderUsersRecord.email,
+                                    conditionalBuilderUsersRecord.branchName,
                                     'casper@ghost.io',
                                   ).maybeHandleOverflow(
                                     maxChars: 40,
@@ -423,7 +417,7 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
                             children: [
                               Text(
                                 valueOrDefault<String>(
-                                  FFAppState().chats?.id,
+                                  conditionalBuilderUsersRecord.collegeName,
                                   'College Group',
                                 ),
                                 style: FlutterFlowTheme.of(context)

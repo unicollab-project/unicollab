@@ -1,6 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/chat_groupwbubbles/empty_state_simple/empty_state_simple_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -85,12 +84,11 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
               Expanded(
                 child: StreamBuilder<List<ChatsRecord>>(
                   stream: queryChatsRecord(
-                    queryBuilder: (chatsRecord) => chatsRecord
-                        .where(
-                          'users',
-                          arrayContains: currentUserReference,
-                        )
-                        .orderBy('last_message_time', descending: true),
+                    queryBuilder: (chatsRecord) => chatsRecord.where(
+                      'users',
+                      arrayContains: currentUserReference,
+                    ),
+                    singleRecord: true,
                   ),
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
@@ -107,31 +105,19 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
                       );
                     }
                     List<ChatsRecord> listViewChatsRecordList = snapshot.data!;
-                    if (listViewChatsRecordList.isEmpty) {
-                      return Center(
-                        child: SizedBox(
-                          width: MediaQuery.sizeOf(context).width * 0.9,
-                          child: EmptyStateSimpleWidget(
-                            icon: Icon(
-                              Icons.mark_chat_unread_outlined,
-                              color: FlutterFlowTheme.of(context).primary,
-                              size: 90.0,
-                            ),
-                            title: 'No Chats',
-                            body:
-                                'You don\'t have any chats created, start a chat by tapping the button in the top right. ',
-                          ),
-                        ),
-                      );
+                    // Return an empty Container when the item does not exist.
+                    if (snapshot.data!.isEmpty) {
+                      return Container();
                     }
-                    return ListView.builder(
+                    final listViewChatsRecord =
+                        listViewChatsRecordList.isNotEmpty
+                            ? listViewChatsRecordList.first
+                            : null;
+                    return ListView(
                       padding: EdgeInsets.zero,
                       scrollDirection: Axis.vertical,
-                      itemCount: listViewChatsRecordList.length,
-                      itemBuilder: (context, listViewIndex) {
-                        final listViewChatsRecord =
-                            listViewChatsRecordList[listViewIndex];
-                        return Padding(
+                      children: [
+                        Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 1.0, 0.0, 0.0),
                           child: InkWell(
@@ -179,7 +165,8 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
                                 ),
                                 child: Builder(
                                   builder: (context) {
-                                    if (listViewChatsRecord.users.length <= 2) {
+                                    if (listViewChatsRecord!.users.length <=
+                                        2) {
                                       return Padding(
                                         padding: const EdgeInsetsDirectional.fromSTEB(
                                             16.0, 12.0, 12.0, 12.0),
@@ -295,7 +282,7 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
                                                                   valueOrDefault<
                                                                       String>(
                                                                     rowUsersRecord
-                                                                        .displayName,
+                                                                        .collegeName,
                                                                     'Ghost User',
                                                                   ),
                                                                   textAlign:
@@ -902,8 +889,8 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
                               ),
                             ),
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     );
                   },
                 ),
@@ -911,14 +898,14 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
               Align(
                 alignment: const AlignmentDirectional(0.0, 1.0),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 30.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 20.0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       context.pushNamed('TaskPage');
                     },
                     text: 'To-do List 📚',
                     options: FFButtonOptions(
-                      height: 40.0,
+                      height: 45.0,
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                       iconPadding:
@@ -936,7 +923,7 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
                         color: Colors.transparent,
                         width: 1.0,
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(24.0),
                     ),
                   ),
                 ),

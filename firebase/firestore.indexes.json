@@ -1,16 +1,16 @@
 {
   "indexes": [
     {
-      "collectionGroup": "chats",
+      "collectionGroup": "cities",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "users",
-          "arrayConfig": "CONTAINS"
+          "fieldPath": "state_ref",
+          "order": "ASCENDING"
         },
         {
-          "fieldPath": "last_message_time",
-          "order": "DESCENDING"
+          "fieldPath": "city_name",
+          "order": "ASCENDING"
         }
       ]
     },

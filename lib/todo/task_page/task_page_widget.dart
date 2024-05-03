@@ -909,8 +909,11 @@ class _TaskPageWidgetState extends State<TaskPageWidget>
                                                                   0.0),
                                                       child: StreamBuilder<
                                                           List<TodoRecord>>(
-                                                        stream:
-                                                            queryTodoRecord(),
+                                                        stream: queryTodoRecord(
+                                                          queryBuilder: (todoRecord) =>
+                                                              todoRecord.orderBy(
+                                                                  'task_deadline'),
+                                                        ),
                                                         builder: (context,
                                                             snapshot) {
                                                           // Customize what your widget looks like when it's loading.
@@ -952,27 +955,16 @@ class _TaskPageWidgetState extends State<TaskPageWidget>
                                                                 width: 100.0,
                                                                 decoration:
                                                                     BoxDecoration(
-                                                                  color: () {
-                                                                    if (listViewTodoRecord
-                                                                            .taskDeadline!
-                                                                            .secondsSinceEpoch <
-                                                                        getCurrentTimestamp
-                                                                            .secondsSinceEpoch) {
-                                                                      return const Color(
-                                                                          0xFF984747);
-                                                                    } else if (listViewTodoRecord
-                                                                            .taskDeadline
-                                                                            ?.secondsSinceEpoch ==
-                                                                        getCurrentTimestamp
-                                                                            .secondsSinceEpoch) {
-                                                                      return const Color(
-                                                                          0x93F3C344);
-                                                                    } else {
-                                                                      return FlutterFlowTheme.of(
+                                                                  color: listViewTodoRecord
+                                                                              .taskDeadline!
+                                                                              .secondsSinceEpoch <
+                                                                          getCurrentTimestamp
+                                                                              .secondsSinceEpoch
+                                                                      ? const Color(
+                                                                          0xFF965050)
+                                                                      : FlutterFlowTheme.of(
                                                                               context)
-                                                                          .secondaryBackground;
-                                                                    }
-                                                                  }(),
+                                                                          .secondaryBackground,
                                                                 ),
                                                                 child: Padding(
                                                                   padding: const EdgeInsetsDirectional

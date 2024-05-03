@@ -403,7 +403,7 @@ class _VirtualStudySpaceWidgetState extends State<VirtualStudySpaceWidget>
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 150.0, 0.0, 16.0),
+                                    0.0, 16.0, 0.0, 16.0),
                                 child: StreamBuilder<UsersRecord>(
                                   stream: UsersRecord.getDocument(
                                       currentUserReference!),

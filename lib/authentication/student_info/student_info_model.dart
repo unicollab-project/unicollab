@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'student_info_widget.dart' show StudentInfoWidget;
@@ -23,6 +24,10 @@ class StudentInfoModel extends FlutterFlowModel<StudentInfoWidget> {
   FocusNode? phoneNumberFocusNode;
   TextEditingController? phoneNumberTextController;
   String? Function(BuildContext, String?)? phoneNumberTextControllerValidator;
+  // Stores action output result for [Firestore Query - Query a collection] action in Button widget.
+  ChatsRecord? foundGroup;
+  // Stores action output result for [Backend Call - Create Document] action in Button widget.
+  ChatsRecord? newChatThread;
 
   @override
   void initState(BuildContext context) {}
