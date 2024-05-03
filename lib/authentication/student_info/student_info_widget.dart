@@ -666,9 +666,9 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                                 ),
                                         singleRecord: true,
                                       ).then((s) => s.firstOrNull);
-                                      if (_model.foundGroup?.groupName !=
-                                              null &&
-                                          _model.foundGroup?.groupName != '') {
+                                      if (_model.foundGroup?.groupName ==
+                                              null ||
+                                          _model.foundGroup?.groupName == '') {
                                         await _model.foundGroup!.reference
                                             .update({
                                           ...createChatsRecordData(
