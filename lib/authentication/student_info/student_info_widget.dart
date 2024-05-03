@@ -659,10 +659,8 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                                 )
                                                 .where(
                                                   'branch_name',
-                                                  isEqualTo: valueOrDefault(
-                                                      currentUserDocument
-                                                          ?.branchName,
-                                                      ''),
+                                                  isEqualTo:
+                                                      _model.branchNameValue,
                                                 ),
                                         singleRecord: true,
                                       ).then((s) => s.firstOrNull);
@@ -728,18 +726,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                           ),
                                         }, chatsRecordReference);
 
-                                        context.pushNamed(
-                                          'chat_2_Details',
-                                          queryParameters: {
-                                            'chatRef': serializeParam(
-                                              _model.newChatThread,
-                                              ParamType.Document,
-                                            ),
-                                          }.withoutNulls,
-                                          extra: <String, dynamic>{
-                                            'chatRef': _model.newChatThread,
-                                          },
-                                        );
+                                        context.pushNamed('chat_2_main');
                                       }
 
                                       setState(() {});
