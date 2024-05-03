@@ -576,6 +576,24 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                         photoUrl:
                                             'https://e7.pngegg.com/pngimages/980/304/png-clipart-computer-icons-user-profile-avatar-heroes-silhouette-thumbnail.png',
                                       ));
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'User Added',
+                                            style: TextStyle(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                            ),
+                                          ),
+                                          duration:
+                                              const Duration(milliseconds: 3000),
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondary,
+                                        ),
+                                      );
                                     },
                                     text: 'Sign Up',
                                     options: FFButtonOptions(
