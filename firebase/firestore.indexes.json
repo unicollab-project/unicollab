@@ -27,6 +27,20 @@
           "order": "DESCENDING"
         }
       ]
+    },
+    {
+      "collectionGroup": "todo",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "task_creator",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "task_deadline",
+          "order": "ASCENDING"
+        }
+      ]
     }
   ]
 }

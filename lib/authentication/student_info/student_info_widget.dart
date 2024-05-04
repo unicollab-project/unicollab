@@ -592,13 +592,17 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                                 ),
                                         singleRecord: true,
                                       ).then((s) => s.firstOrNull);
-                                      if (_model.foundGroup?.groupName ==
-                                              null ||
-                                          _model.foundGroup?.groupName == '') {
+                                      if ((_model.foundGroup?.groupName ==
+                                                  null ||
+                                              _model.foundGroup?.groupName ==
+                                                  '') &&
+                                          (_model.foundGroup?.branchName ==
+                                                  null ||
+                                              _model.foundGroup?.branchName ==
+                                                  '')) {
                                         await ChatsRecord.collection.doc().set({
                                           ...createChatsRecordData(
                                             userA: buttonUsersRecord.reference,
-                                            lastMessage: 'Hey there!!',
                                             lastMessageTime:
                                                 getCurrentTimestamp,
                                             lastMessageSentBy:

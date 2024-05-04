@@ -183,7 +183,8 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                if (_model.uploadedFileUrl != '')
+                if ((_model.uploadedFileUrl1 != '') ||
+                    (_model.uploadedFileUrl2 != ''))
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -198,7 +199,9 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 FlutterFlowMediaDisplay(
-                                  path: _model.uploadedFileUrl,
+                                  path: _model.uploadedFileUrl2 != ''
+                                      ? _model.uploadedFileUrl2
+                                      : 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/640px-PDF_file_icon.svg.png',
                                   imageBuilder: (path) => ClipRRect(
                                     borderRadius: BorderRadius.circular(8.0),
                                     child: CachedNetworkImage(
@@ -240,11 +243,19 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                     ),
                                     onPressed: () async {
                                       setState(() {
-                                        _model.isDataUploading = false;
-                                        _model.uploadedLocalFile =
+                                        _model.isDataUploading2 = false;
+                                        _model.uploadedLocalFile2 =
                                             FFUploadedFile(
                                                 bytes: Uint8List.fromList([]));
-                                        _model.uploadedFileUrl = '';
+                                        _model.uploadedFileUrl2 = '';
+                                      });
+
+                                      setState(() {
+                                        _model.isDataUploading1 = false;
+                                        _model.uploadedLocalFile1 =
+                                            FFUploadedFile(
+                                                bytes: Uint8List.fromList([]));
+                                        _model.uploadedFileUrl1 = '';
                                       });
                                     },
                                   ),
@@ -269,91 +280,182 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        FlutterFlowIconButton(
-                          borderColor: FlutterFlowTheme.of(context).success,
-                          borderRadius: 60.0,
-                          borderWidth: 1.0,
-                          buttonSize: 40.0,
-                          fillColor:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          icon: Icon(
-                            Icons.add_rounded,
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            size: 24.0,
-                          ),
-                          onPressed: () async {
-                            final selectedMedia =
-                                await selectMediaWithSourceBottomSheet(
-                              context: context,
-                              allowPhoto: true,
-                              allowVideo: true,
-                              backgroundColor: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              textColor:
-                                  FlutterFlowTheme.of(context).primaryText,
-                              pickerFontFamily: 'Outfit',
-                            );
-                            if (selectedMedia != null &&
-                                selectedMedia.every((m) => validateFileFormat(
-                                    m.storagePath, context))) {
-                              setState(() => _model.isDataUploading = true);
-                              var selectedUploadedFiles = <FFUploadedFile>[];
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 1.0, 0.0),
+                          child: FlutterFlowIconButton(
+                            borderColor: FlutterFlowTheme.of(context).success,
+                            borderRadius: 60.0,
+                            borderWidth: 1.0,
+                            buttonSize: 40.0,
+                            fillColor: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            icon: Icon(
+                              Icons.file_copy,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 24.0,
+                            ),
+                            onPressed: () async {
+                              final selectedFiles = await selectFiles(
+                                allowedExtensions: ['pdf'],
+                                multiFile: false,
+                              );
+                              if (selectedFiles != null) {
+                                setState(() => _model.isDataUploading1 = true);
+                                var selectedUploadedFiles = <FFUploadedFile>[];
 
-                              var downloadUrls = <String>[];
-                              try {
-                                showUploadMessage(
-                                  context,
-                                  'Uploading file...',
-                                  showLoading: true,
-                                );
-                                selectedUploadedFiles = selectedMedia
-                                    .map((m) => FFUploadedFile(
-                                          name: m.storagePath.split('/').last,
-                                          bytes: m.bytes,
-                                          height: m.dimensions?.height,
-                                          width: m.dimensions?.width,
-                                          blurHash: m.blurHash,
-                                        ))
-                                    .toList();
+                                var downloadUrls = <String>[];
+                                try {
+                                  showUploadMessage(
+                                    context,
+                                    'Uploading file...',
+                                    showLoading: true,
+                                  );
+                                  selectedUploadedFiles = selectedFiles
+                                      .map((m) => FFUploadedFile(
+                                            name: m.storagePath.split('/').last,
+                                            bytes: m.bytes,
+                                          ))
+                                      .toList();
 
-                                downloadUrls = (await Future.wait(
-                                  selectedMedia.map(
-                                    (m) async => await uploadData(
-                                        m.storagePath, m.bytes),
-                                  ),
-                                ))
-                                    .where((u) => u != null)
-                                    .map((u) => u!)
-                                    .toList();
-                              } finally {
-                                ScaffoldMessenger.of(context)
-                                    .hideCurrentSnackBar();
-                                _model.isDataUploading = false;
+                                  downloadUrls = (await Future.wait(
+                                    selectedFiles.map(
+                                      (f) async => await uploadData(
+                                          f.storagePath, f.bytes),
+                                    ),
+                                  ))
+                                      .where((u) => u != null)
+                                      .map((u) => u!)
+                                      .toList();
+                                } finally {
+                                  ScaffoldMessenger.of(context)
+                                      .hideCurrentSnackBar();
+                                  _model.isDataUploading1 = false;
+                                }
+                                if (selectedUploadedFiles.length ==
+                                        selectedFiles.length &&
+                                    downloadUrls.length ==
+                                        selectedFiles.length) {
+                                  setState(() {
+                                    _model.uploadedLocalFile1 =
+                                        selectedUploadedFiles.first;
+                                    _model.uploadedFileUrl1 =
+                                        downloadUrls.first;
+                                  });
+                                  showUploadMessage(
+                                    context,
+                                    'Success!',
+                                  );
+                                } else {
+                                  setState(() {});
+                                  showUploadMessage(
+                                    context,
+                                    'Failed to upload file',
+                                  );
+                                  return;
+                                }
                               }
-                              if (selectedUploadedFiles.length ==
-                                      selectedMedia.length &&
-                                  downloadUrls.length == selectedMedia.length) {
+
+                              if (_model.uploadedFileUrl1 != '') {
                                 setState(() {
-                                  _model.uploadedLocalFile =
-                                      selectedUploadedFiles.first;
-                                  _model.uploadedFileUrl = downloadUrls.first;
+                                  _model.addToImagesUploaded(
+                                      _model.uploadedFileUrl1);
                                 });
-                                showUploadMessage(context, 'Success!');
-                              } else {
-                                setState(() {});
-                                showUploadMessage(
-                                    context, 'Failed to upload data');
-                                return;
                               }
-                            }
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              5.0, 0.0, 1.0, 0.0),
+                          child: FlutterFlowIconButton(
+                            borderColor: FlutterFlowTheme.of(context).success,
+                            borderRadius: 60.0,
+                            borderWidth: 1.0,
+                            buttonSize: 40.0,
+                            fillColor: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            icon: Icon(
+                              Icons.image,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 24.0,
+                            ),
+                            onPressed: () async {
+                              final selectedMedia =
+                                  await selectMediaWithSourceBottomSheet(
+                                context: context,
+                                allowPhoto: true,
+                                allowVideo: true,
+                                backgroundColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                textColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                pickerFontFamily: 'Outfit',
+                              );
+                              if (selectedMedia != null &&
+                                  selectedMedia.every((m) => validateFileFormat(
+                                      m.storagePath, context))) {
+                                setState(() => _model.isDataUploading2 = true);
+                                var selectedUploadedFiles = <FFUploadedFile>[];
 
-                            if (_model.uploadedFileUrl != '') {
-                              setState(() {
-                                _model.addToImagesUploaded(
-                                    _model.uploadedFileUrl);
-                              });
-                            }
-                          },
+                                var downloadUrls = <String>[];
+                                try {
+                                  showUploadMessage(
+                                    context,
+                                    'Uploading file...',
+                                    showLoading: true,
+                                  );
+                                  selectedUploadedFiles = selectedMedia
+                                      .map((m) => FFUploadedFile(
+                                            name: m.storagePath.split('/').last,
+                                            bytes: m.bytes,
+                                            height: m.dimensions?.height,
+                                            width: m.dimensions?.width,
+                                            blurHash: m.blurHash,
+                                          ))
+                                      .toList();
+
+                                  downloadUrls = (await Future.wait(
+                                    selectedMedia.map(
+                                      (m) async => await uploadData(
+                                          m.storagePath, m.bytes),
+                                    ),
+                                  ))
+                                      .where((u) => u != null)
+                                      .map((u) => u!)
+                                      .toList();
+                                } finally {
+                                  ScaffoldMessenger.of(context)
+                                      .hideCurrentSnackBar();
+                                  _model.isDataUploading2 = false;
+                                }
+                                if (selectedUploadedFiles.length ==
+                                        selectedMedia.length &&
+                                    downloadUrls.length ==
+                                        selectedMedia.length) {
+                                  setState(() {
+                                    _model.uploadedLocalFile2 =
+                                        selectedUploadedFiles.first;
+                                    _model.uploadedFileUrl2 =
+                                        downloadUrls.first;
+                                  });
+                                  showUploadMessage(context, 'Success!');
+                                } else {
+                                  setState(() {});
+                                  showUploadMessage(
+                                      context, 'Failed to upload data');
+                                  return;
+                                }
+                              }
+
+                              if (_model.uploadedFileUrl2 != '') {
+                                setState(() {
+                                  _model.addToImagesUploaded(
+                                      _model.uploadedFileUrl2);
+                                });
+                              }
+                            },
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
@@ -458,7 +560,7 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                           chat: widget.chatRef?.reference,
                                           text: _model.textController.text,
                                           timestamp: getCurrentTimestamp,
-                                          image: _model.uploadedFileUrl,
+                                          image: _model.uploadedFileUrl1,
                                         ));
                                         _model.newChatMessage = ChatMessagesRecord
                                             .getDocumentFromData(
@@ -470,7 +572,8 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                                       .textController.text,
                                                   timestamp:
                                                       getCurrentTimestamp,
-                                                  image: _model.uploadedFileUrl,
+                                                  image:
+                                                      _model.uploadedFileUrl1,
                                                 ),
                                                 chatMessagesRecordReference);
                                         // clearUsers
@@ -505,12 +608,12 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                           _model.textController?.clear();
                                         });
                                         setState(() {
-                                          _model.isDataUploading = false;
-                                          _model.uploadedLocalFile =
+                                          _model.isDataUploading2 = false;
+                                          _model.uploadedLocalFile2 =
                                               FFUploadedFile(
                                                   bytes:
                                                       Uint8List.fromList([]));
-                                          _model.uploadedFileUrl = '';
+                                          _model.uploadedFileUrl2 = '';
                                         });
 
                                         setState(() {
@@ -645,7 +748,8 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                                 text:
                                                     _model.textController.text,
                                                 timestamp: getCurrentTimestamp,
-                                                image: _model.uploadedFileUrl,
+                                                image: _model.uploadedFileUrl2,
+                                                video: _model.uploadedFileUrl2,
                                               ));
                                           _model.newChat = ChatMessagesRecord
                                               .getDocumentFromData(
@@ -658,7 +762,9 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                                     timestamp:
                                                         getCurrentTimestamp,
                                                     image:
-                                                        _model.uploadedFileUrl,
+                                                        _model.uploadedFileUrl2,
+                                                    video:
+                                                        _model.uploadedFileUrl2,
                                                   ),
                                                   chatMessagesRecordReference);
                                           // clearUsers
@@ -694,12 +800,21 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                             _model.textController?.clear();
                                           });
                                           setState(() {
-                                            _model.isDataUploading = false;
-                                            _model.uploadedLocalFile =
+                                            _model.isDataUploading2 = false;
+                                            _model.uploadedLocalFile2 =
                                                 FFUploadedFile(
                                                     bytes:
                                                         Uint8List.fromList([]));
-                                            _model.uploadedFileUrl = '';
+                                            _model.uploadedFileUrl2 = '';
+                                          });
+
+                                          setState(() {
+                                            _model.isDataUploading1 = false;
+                                            _model.uploadedLocalFile1 =
+                                                FFUploadedFile(
+                                                    bytes:
+                                                        Uint8List.fromList([]));
+                                            _model.uploadedFileUrl1 = '';
                                           });
 
                                           setState(() {

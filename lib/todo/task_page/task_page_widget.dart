@@ -854,7 +854,16 @@ class _TaskPageWidgetState extends State<TaskPageWidget>
                                                                 FutureBuilder<
                                                                     int>(
                                                               future:
-                                                                  queryTodoRecordCount(),
+                                                                  queryTodoRecordCount(
+                                                                queryBuilder:
+                                                                    (todoRecord) =>
+                                                                        todoRecord
+                                                                            .where(
+                                                                  'task_creator',
+                                                                  isEqualTo:
+                                                                      currentUserReference,
+                                                                ),
+                                                              ),
                                                               builder: (context,
                                                                   snapshot) {
                                                                 // Customize what your widget looks like when it's loading.
@@ -910,9 +919,16 @@ class _TaskPageWidgetState extends State<TaskPageWidget>
                                                       child: StreamBuilder<
                                                           List<TodoRecord>>(
                                                         stream: queryTodoRecord(
-                                                          queryBuilder: (todoRecord) =>
-                                                              todoRecord.orderBy(
-                                                                  'task_deadline'),
+                                                          queryBuilder:
+                                                              (todoRecord) =>
+                                                                  todoRecord
+                                                                      .where(
+                                                                        'task_creator',
+                                                                        isEqualTo:
+                                                                            currentUserReference,
+                                                                      )
+                                                                      .orderBy(
+                                                                          'task_deadline'),
                                                         ),
                                                         builder: (context,
                                                             snapshot) {
