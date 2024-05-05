@@ -5,6 +5,7 @@ import '/chat_groupwbubbles/chat_thread_update/chat_thread_update_widget.dart';
 import '/chat_groupwbubbles/empty_state_simple/empty_state_simple_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_media_display.dart';
+import '/flutter_flow/flutter_flow_pdf_viewer.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
@@ -183,8 +184,7 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                if ((_model.uploadedFileUrl1 != '') ||
-                    (_model.uploadedFileUrl2 != ''))
+                if (_model.uploadedFileUrl2 != '')
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -267,6 +267,17 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                             ),
                           ),
                         ),
+                      ),
+                    ],
+                  ),
+                if (_model.uploadedFileUrl1 != '')
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      FlutterFlowPdfViewer(
+                        networkPath: _model.uploadedFileUrl1,
+                        height: 300.0,
+                        horizontalScroll: false,
                       ),
                     ],
                   ),
@@ -749,7 +760,7 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                                     _model.textController.text,
                                                 timestamp: getCurrentTimestamp,
                                                 image: _model.uploadedFileUrl2,
-                                                video: _model.uploadedFileUrl2,
+                                                video: _model.uploadedFileUrl1,
                                               ));
                                           _model.newChat = ChatMessagesRecord
                                               .getDocumentFromData(
@@ -764,7 +775,7 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                                     image:
                                                         _model.uploadedFileUrl2,
                                                     video:
-                                                        _model.uploadedFileUrl2,
+                                                        _model.uploadedFileUrl1,
                                                   ),
                                                   chatMessagesRecordReference);
                                           // clearUsers
@@ -797,9 +808,6 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                           // clearUsers
                                           _model.lastSeenBy = [];
                                           setState(() {
-                                            _model.textController?.clear();
-                                          });
-                                          setState(() {
                                             _model.isDataUploading2 = false;
                                             _model.uploadedLocalFile2 =
                                                 FFUploadedFile(
@@ -817,6 +825,9 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                             _model.uploadedFileUrl1 = '';
                                           });
 
+                                          setState(() {
+                                            _model.textController?.clear();
+                                          });
                                           setState(() {
                                             _model.imagesUploaded = [];
                                           });

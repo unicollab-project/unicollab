@@ -382,7 +382,7 @@ class _ChatThreadUpdateWidgetState extends State<ChatThreadUpdateWidget> {
                                 child: Text(
                               valueOrDefault<String>(
                                 widget.chatMessagesRef?.text,
-                                '--',
+                                'Uploaded to Chat',
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .titleSmall
@@ -391,8 +391,10 @@ class _ChatThreadUpdateWidgetState extends State<ChatThreadUpdateWidget> {
                                     letterSpacing: 0.0,
                                   ),
                             )),
-                            if (widget.chatMessagesRef?.image != null &&
-                                widget.chatMessagesRef?.image != '')
+                            if ((widget.chatMessagesRef?.image != null &&
+                                    widget.chatMessagesRef?.image != '') ||
+                                (widget.chatMessagesRef?.video != null &&
+                                    widget.chatMessagesRef?.video != ''))
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 12.0, 0.0, 4.0),
@@ -416,7 +418,11 @@ class _ChatThreadUpdateWidgetState extends State<ChatThreadUpdateWidget> {
                                     );
                                   },
                                   child: FlutterFlowMediaDisplay(
-                                    path: widget.chatMessagesRef!.image,
+                                    path: widget.chatMessagesRef?.image !=
+                                                null &&
+                                            widget.chatMessagesRef?.image != ''
+                                        ? widget.chatMessagesRef!.image
+                                        : widget.chatMessagesRef!.video,
                                     imageBuilder: (path) => ClipRRect(
                                       borderRadius: BorderRadius.circular(8.0),
                                       child: CachedNetworkImage(

@@ -28,16 +28,6 @@ class ChatThreadComponentModel
   void updateImagesUploadedAtIndex(int index, Function(String) updateFn) =>
       imagesUploaded[index] = updateFn(imagesUploaded[index]);
 
-  List<String> filesUploaded = [];
-  void addToFilesUploaded(String item) => filesUploaded.add(item);
-  void removeFromFilesUploaded(String item) => filesUploaded.remove(item);
-  void removeAtIndexFromFilesUploaded(int index) =>
-      filesUploaded.removeAt(index);
-  void insertAtIndexInFilesUploaded(int index, String item) =>
-      filesUploaded.insert(index, item);
-  void updateFilesUploadedAtIndex(int index, Function(String) updateFn) =>
-      filesUploaded[index] = updateFn(filesUploaded[index]);
-
   ///  State fields for stateful widgets in this component.
 
   final formKey = GlobalKey<FormState>();

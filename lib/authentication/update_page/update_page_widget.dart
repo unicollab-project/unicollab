@@ -220,21 +220,54 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if (columnUsersRecord?.displayName != null &&
-                                  columnUsersRecord?.displayName != '')
-                                AuthUserStreamWidget(
-                                  builder: (context) => Text(
-                                    currentUserDisplayName,
-                                    style: FlutterFlowTheme.of(context)
-                                        .headlineSmall
-                                        .override(
-                                          fontFamily: 'Urbanist',
-                                          color:
-                                              FlutterFlowTheme.of(context).info,
-                                          letterSpacing: 0.0,
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  if (columnUsersRecord?.displayName != null &&
+                                      columnUsersRecord?.displayName != '')
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 1.0, 0.0),
+                                      child: AuthUserStreamWidget(
+                                        builder: (context) => Text(
+                                          currentUserDisplayName,
+                                          style: FlutterFlowTheme.of(context)
+                                              .headlineSmall
+                                              .override(
+                                                fontFamily: 'Urbanist',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                fontSize: 20.0,
+                                                letterSpacing: 0.0,
+                                              ),
                                         ),
-                                  ),
-                                ),
+                                      ),
+                                    ),
+                                  if (columnUsersRecord?.lastName != null &&
+                                      columnUsersRecord?.lastName != '')
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          4.0, 0.0, 0.0, 0.0),
+                                      child: Text(
+                                        valueOrDefault<String>(
+                                          columnUsersRecord?.lastName,
+                                          '.',
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .headlineSmall
+                                            .override(
+                                              fontFamily: 'Urbanist',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .info,
+                                              fontSize: 20.0,
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
+                                    ),
+                                ],
+                              ),
                               if (columnUsersRecord?.email != null &&
                                   columnUsersRecord?.email != '')
                                 Padding(
@@ -252,6 +285,20 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                                           fontWeight: FontWeight.normal,
                                         ),
                                   ),
+                                ),
+                              if (columnUsersRecord?.phoneNumber != null &&
+                                  columnUsersRecord?.phoneNumber != '')
+                                Text(
+                                  valueOrDefault<String>(
+                                    columnUsersRecord?.phoneNumber,
+                                    '.',
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        letterSpacing: 0.0,
+                                      ),
                                 ),
                             ],
                           ),
@@ -276,7 +323,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 5.0, 0.0, 5.0),
+                                  0.0, 3.0, 0.0, 3.0),
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
@@ -363,7 +410,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 5.0, 0.0, 5.0),
+                                  0.0, 3.0, 0.0, 3.0),
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
@@ -442,7 +489,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 5.0, 0.0, 5.0),
+                                  0.0, 3.0, 0.0, 3.0),
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
@@ -526,7 +573,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 14.0, 0.0, 10.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 5.0),
                 child: StreamBuilder<UsersRecord>(
                   stream: UsersRecord.getDocument(currentUserReference!),
                   builder: (context, snapshot) {
@@ -589,7 +636,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(10.0, 5.0, 10.0, 0.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -630,7 +677,7 @@ class _UpdatePageWidgetState extends State<UpdatePageWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 30.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 15.0),
                 child: FFButtonWidget(
                   onPressed: () async {
                     GoRouter.of(context).prepareAuthEvent();
