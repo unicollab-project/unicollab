@@ -270,17 +270,16 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                       ),
                     ],
                   ),
-                if (_model.uploadedFileUrl1 != '')
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      FlutterFlowPdfViewer(
-                        networkPath: _model.uploadedFileUrl1,
-                        height: 300.0,
-                        horizontalScroll: false,
-                      ),
-                    ],
-                  ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    FlutterFlowPdfViewer(
+                      networkPath: _model.uploadedFileUrl1,
+                      height: 300.0,
+                      horizontalScroll: false,
+                    ),
+                  ],
+                ),
                 Form(
                   key: _model.formKey,
                   autovalidateMode: AutovalidateMode.disabled,
@@ -571,7 +570,7 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                           chat: widget.chatRef?.reference,
                                           text: _model.textController.text,
                                           timestamp: getCurrentTimestamp,
-                                          image: _model.uploadedFileUrl1,
+                                          image: _model.uploadedFileUrl2,
                                         ));
                                         _model.newChatMessage = ChatMessagesRecord
                                             .getDocumentFromData(
@@ -584,7 +583,7 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                                   timestamp:
                                                       getCurrentTimestamp,
                                                   image:
-                                                      _model.uploadedFileUrl1,
+                                                      _model.uploadedFileUrl2,
                                                 ),
                                                 chatMessagesRecordReference);
                                         // clearUsers
@@ -760,7 +759,6 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                                     _model.textController.text,
                                                 timestamp: getCurrentTimestamp,
                                                 image: _model.uploadedFileUrl2,
-                                                video: _model.uploadedFileUrl1,
                                               ));
                                           _model.newChat = ChatMessagesRecord
                                               .getDocumentFromData(
@@ -774,8 +772,6 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                                         getCurrentTimestamp,
                                                     image:
                                                         _model.uploadedFileUrl2,
-                                                    video:
-                                                        _model.uploadedFileUrl1,
                                                   ),
                                                   chatMessagesRecordReference);
                                           // clearUsers

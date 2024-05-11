@@ -19,5 +19,3 @@ export '/calling/video_call_page/video_call_page_widget.dart'
 export '/todo/task_page/task_page_widget.dart' show TaskPageWidget;
 export '/calling/voice_call_page/voice_call_page_widget.dart'
     show VoiceCallPageWidget;
-export '/chat_groupwbubbles/uploaded_files/uploaded_files_widget.dart'
-    show UploadedFilesWidget;

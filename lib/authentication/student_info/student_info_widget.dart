@@ -579,27 +579,15 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                       _model.foundGroup =
                                           await queryChatsRecordOnce(
                                         queryBuilder: (chatsRecord) =>
-                                            chatsRecord
-                                                .where(
-                                                  'group_name',
-                                                  isEqualTo:
-                                                      _model.collegeNameValue,
-                                                )
-                                                .where(
-                                                  'branch_name',
-                                                  isEqualTo:
-                                                      _model.branchNameValue,
-                                                ),
+                                            chatsRecord.where(
+                                          'branch_name',
+                                          isEqualTo: _model.branchNameValue,
+                                        ),
                                         singleRecord: true,
                                       ).then((s) => s.firstOrNull);
-                                      if ((_model.foundGroup?.groupName ==
-                                                  null ||
-                                              _model.foundGroup?.groupName ==
-                                                  '') &&
-                                          (_model.foundGroup?.branchName ==
-                                                  null ||
-                                              _model.foundGroup?.branchName ==
-                                                  '')) {
+                                      if (_model.foundGroup?.branchName !=
+                                              null &&
+                                          _model.foundGroup?.branchName != '') {
                                         await ChatsRecord.collection.doc().set({
                                           ...createChatsRecordData(
                                             userA: buttonUsersRecord.reference,
@@ -610,7 +598,6 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                             groupChatId:
                                                 random_data.randomInteger(
                                                     1000000, 9999999),
-                                            groupName: _model.collegeNameValue,
                                             branchName: _model.branchNameValue,
                                           ),
                                           ...mapToFirestore(

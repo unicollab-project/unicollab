@@ -185,19 +185,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.String,
             ),
           ),
-        ),
-        FFRoute(
-          name: 'UploadedFiles',
-          path: '/uploadedFiles',
-          asyncParams: {
-            'chatRef': getDoc(['chats'], ChatsRecord.fromSnapshot),
-          },
-          builder: (context, params) => UploadedFilesWidget(
-            chatRef: params.getParam(
-              'chatRef',
-              ParamType.Document,
-            ),
-          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],
@@ -453,4 +440,14 @@ class RootPageContext {
         value: RootPageContext(true, errorRoute),
         child: child,
       );
+}
+
+extension GoRouterLocationExtension on GoRouter {
+  String getCurrentLocation() {
+    final RouteMatch lastMatch = routerDelegate.currentConfiguration.last;
+    final RouteMatchList matchList = lastMatch is ImperativeRouteMatch
+        ? lastMatch.matches
+        : routerDelegate.currentConfiguration;
+    return matchList.uri.toString();
+  }
 }

@@ -23,7 +23,7 @@ class UpdatePageModel extends FlutterFlowModel<UpdatePageWidget> {
   TextEditingController? phoneNumberTextController;
   String? Function(BuildContext, String?)? phoneNumberTextControllerValidator;
   // State field(s) for Switch widget.
-  bool switchValue = true;
+  bool? switchValue;
 
   @override
   void initState(BuildContext context) {}

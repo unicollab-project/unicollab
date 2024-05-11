@@ -388,6 +388,7 @@ class _ChatThreadUpdateWidgetState extends State<ChatThreadUpdateWidget> {
                                   .titleSmall
                                   .override(
                                     fontFamily: 'Plus Jakarta Sans',
+                                    color: Colors.white,
                                     letterSpacing: 0.0,
                                   ),
                             )),

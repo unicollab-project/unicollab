@@ -116,368 +116,342 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
                 );
               }
               final conditionalBuilderUsersRecord = snapshot.data!;
-              return InkWell(
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onTap: () async {
-                  context.pushNamed(
-                    'UploadedFiles',
-                    queryParameters: {
-                      'chatRef': serializeParam(
-                        widget.chatRef,
-                        ParamType.Document,
-                      ),
-                    }.withoutNulls,
-                    extra: <String, dynamic>{
-                      'chatRef': widget.chatRef,
-                    },
-                  );
-                },
-                child: Builder(
-                  builder: (context) {
-                    if (widget.chatRef!.users.length <= 2) {
-                      return Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          if (conditionalBuilderUsersRecord.photoUrl != '')
-                            Align(
-                              alignment: const AlignmentDirectional(-1.0, -1.0),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 12.0, 0.0),
-                                child: Container(
-                                  width: 44.0,
-                                  height: 44.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context).accent1,
-                                    borderRadius: BorderRadius.circular(12.0),
-                                    shape: BoxShape.rectangle,
-                                    border: Border.all(
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      width: 2.0,
-                                    ),
+              return Builder(
+                builder: (context) {
+                  if (widget.chatRef!.users.length <= 2) {
+                    return Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        if (conditionalBuilderUsersRecord.photoUrl != '')
+                          Align(
+                            alignment: const AlignmentDirectional(-1.0, -1.0),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 12.0, 0.0),
+                              child: Container(
+                                width: 44.0,
+                                height: 44.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context).accent1,
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  shape: BoxShape.rectangle,
+                                  border: Border.all(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    width: 2.0,
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.network(
-                                        conditionalBuilderUsersRecord.photoUrl,
-                                        width: 44.0,
-                                        height: 44.0,
-                                        fit: BoxFit.cover,
-                                      ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.network(
+                                      conditionalBuilderUsersRecord.photoUrl,
+                                      width: 44.0,
+                                      height: 44.0,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          Expanded(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  conditionalBuilderUsersRecord.collegeName,
+                          ),
+                        Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                conditionalBuilderUsersRecord.collegeName,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyLarge
+                                    .override(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      letterSpacing: 0.0,
+                                    ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 4.0, 0.0, 0.0),
+                                child: AutoSizeText(
+                                  valueOrDefault<String>(
+                                    conditionalBuilderUsersRecord.branchName,
+                                    'casper@ghost.io',
+                                  ).maybeHandleOverflow(
+                                    maxChars: 40,
+                                    replacement: '…',
+                                  ),
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyLarge
+                                      .labelSmall
                                       .override(
                                         fontFamily: 'Plus Jakarta Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
                                         letterSpacing: 0.0,
                                       ),
+                                  minFontSize: 10.0,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
-                                  child: AutoSizeText(
-                                    valueOrDefault<String>(
-                                      conditionalBuilderUsersRecord.branchName,
-                                      'casper@ghost.io',
-                                    ).maybeHandleOverflow(
-                                      maxChars: 40,
-                                      replacement: '…',
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .labelSmall
-                                        .override(
-                                          fontFamily: 'Plus Jakarta Sans',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 4.0, 12.0, 4.0),
+                          child: SizedBox(
+                            width: 54.0,
+                            height: 44.0,
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: const AlignmentDirectional(1.0, 1.0),
+                                  child: FutureBuilder<UsersRecord>(
+                                    future: UsersRecord.getDocumentOnce(widget
+                                        .chatRef!.users
+                                        .where((e) => e != currentUserReference)
+                                        .toList()
+                                        .last),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 40.0,
+                                            height: 40.0,
+                                            child: SpinKitFoldingCube(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              size: 40.0,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      final secondUserUsersRecord =
+                                          snapshot.data!;
+                                      return Container(
+                                        width: 32.0,
+                                        height: 32.0,
+                                        decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          letterSpacing: 0.0,
+                                              .accent1,
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                          shape: BoxShape.rectangle,
+                                          border: Border.all(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            width: 2.0,
+                                          ),
                                         ),
-                                    minFontSize: 10.0,
+                                        child: Builder(
+                                          builder: (context) {
+                                            if (secondUserUsersRecord
+                                                        .photoUrl !=
+                                                    '') {
+                                              return Padding(
+                                                padding: const EdgeInsets.all(2.0),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                  child: CachedNetworkImage(
+                                                    fadeInDuration: const Duration(
+                                                        milliseconds: 200),
+                                                    fadeOutDuration: const Duration(
+                                                        milliseconds: 200),
+                                                    imageUrl:
+                                                        valueOrDefault<String>(
+                                                      secondUserUsersRecord
+                                                          .photoUrl,
+                                                      'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/test-flow-at3mts/assets/jozbfglfd548/flutterflow_future%402x.jpg',
+                                                    ),
+                                                    width: 44.0,
+                                                    height: 44.0,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              );
+                                            } else {
+                                              return Padding(
+                                                padding: const EdgeInsets.all(2.0),
+                                                child: Container(
+                                                  width: 100.0,
+                                                  height: 100.0,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryBackground,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  alignment:
+                                                      const AlignmentDirectional(
+                                                          0.0, 0.0),
+                                                  child: Text(
+                                                    valueOrDefault<String>(
+                                                      secondUserUsersRecord
+                                                          .displayName,
+                                                      'A',
+                                                    ).maybeHandleOverflow(
+                                                        maxChars: 1),
+                                                    textAlign: TextAlign.center,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyLarge
+                                                        .override(
+                                                          fontFamily:
+                                                              'Plus Jakarta Sans',
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          },
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 4.0, 12.0, 4.0),
-                            child: SizedBox(
-                              width: 54.0,
-                              height: 44.0,
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: const AlignmentDirectional(1.0, 1.0),
-                                    child: FutureBuilder<UsersRecord>(
-                                      future: UsersRecord.getDocumentOnce(widget
-                                          .chatRef!.users
-                                          .where(
-                                              (e) => e != currentUserReference)
-                                          .toList()
-                                          .last),
-                                      builder: (context, snapshot) {
-                                        // Customize what your widget looks like when it's loading.
-                                        if (!snapshot.hasData) {
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 40.0,
-                                              height: 40.0,
-                                              child: SpinKitFoldingCube(
+                                Align(
+                                  alignment: const AlignmentDirectional(-1.0, -1.0),
+                                  child: Container(
+                                    width: 32.0,
+                                    height: 32.0,
+                                    decoration: BoxDecoration(
+                                      color:
+                                          FlutterFlowTheme.of(context).accent1,
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      shape: BoxShape.rectangle,
+                                      border: Border.all(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                    child: Builder(
+                                      builder: (context) {
+                                        if (conditionalBuilderUsersRecord
+                                                    .photoUrl !=
+                                                '') {
+                                          return Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                              child: CachedNetworkImage(
+                                                fadeInDuration:
+                                                    const Duration(milliseconds: 200),
+                                                fadeOutDuration:
+                                                    const Duration(milliseconds: 200),
+                                                imageUrl:
+                                                    valueOrDefault<String>(
+                                                  conditionalBuilderUsersRecord
+                                                      .photoUrl,
+                                                  'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/test-flow-at3mts/assets/jozbfglfd548/flutterflow_future%402x.jpg',
+                                                ),
+                                                width: 44.0,
+                                                height: 44.0,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          return Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Container(
+                                              width: 100.0,
+                                              height: 100.0,
+                                              decoration: BoxDecoration(
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                size: 40.0,
+                                                        .secondaryBackground,
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              alignment: const AlignmentDirectional(
+                                                  0.0, 0.0),
+                                              child: Text(
+                                                valueOrDefault<String>(
+                                                  conditionalBuilderUsersRecord
+                                                      .displayName,
+                                                  'A',
+                                                ).maybeHandleOverflow(
+                                                    maxChars: 1),
+                                                textAlign: TextAlign.center,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyLarge
+                                                        .override(
+                                                          fontFamily:
+                                                              'Plus Jakarta Sans',
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                               ),
                                             ),
                                           );
                                         }
-                                        final secondUserUsersRecord =
-                                            snapshot.data!;
-                                        return Container(
-                                          width: 32.0,
-                                          height: 32.0,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .accent1,
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                            shape: BoxShape.rectangle,
-                                            border: Border.all(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              width: 2.0,
-                                            ),
-                                          ),
-                                          child: Builder(
-                                            builder: (context) {
-                                              if (secondUserUsersRecord
-                                                          .photoUrl !=
-                                                      '') {
-                                                return Padding(
-                                                  padding: const EdgeInsets.all(2.0),
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                    child: CachedNetworkImage(
-                                                      fadeInDuration: const Duration(
-                                                          milliseconds: 200),
-                                                      fadeOutDuration: const Duration(
-                                                          milliseconds: 200),
-                                                      imageUrl: valueOrDefault<
-                                                          String>(
-                                                        secondUserUsersRecord
-                                                            .photoUrl,
-                                                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/test-flow-at3mts/assets/jozbfglfd548/flutterflow_future%402x.jpg',
-                                                      ),
-                                                      width: 44.0,
-                                                      height: 44.0,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                );
-                                              } else {
-                                                return Padding(
-                                                  padding: const EdgeInsets.all(2.0),
-                                                  child: Container(
-                                                    width: 100.0,
-                                                    height: 100.0,
-                                                    decoration: BoxDecoration(
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .secondaryBackground,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    alignment:
-                                                        const AlignmentDirectional(
-                                                            0.0, 0.0),
-                                                    child: Text(
-                                                      valueOrDefault<String>(
-                                                        secondUserUsersRecord
-                                                            .displayName,
-                                                        'A',
-                                                      ).maybeHandleOverflow(
-                                                          maxChars: 1),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyLarge
-                                                          .override(
-                                                            fontFamily:
-                                                                'Plus Jakarta Sans',
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                            },
-                                          ),
-                                        );
                                       },
                                     ),
-                                  ),
-                                  Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
-                                    child: Container(
-                                      width: 32.0,
-                                      height: 32.0,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .accent1,
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        shape: BoxShape.rectangle,
-                                        border: Border.all(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          width: 2.0,
-                                        ),
-                                      ),
-                                      child: Builder(
-                                        builder: (context) {
-                                          if (conditionalBuilderUsersRecord
-                                                      .photoUrl !=
-                                                  '') {
-                                            return Padding(
-                                              padding: const EdgeInsets.all(2.0),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                                child: CachedNetworkImage(
-                                                  fadeInDuration: const Duration(
-                                                      milliseconds: 200),
-                                                  fadeOutDuration: const Duration(
-                                                      milliseconds: 200),
-                                                  imageUrl:
-                                                      valueOrDefault<String>(
-                                                    conditionalBuilderUsersRecord
-                                                        .photoUrl,
-                                                    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/test-flow-at3mts/assets/jozbfglfd548/flutterflow_future%402x.jpg',
-                                                  ),
-                                                  width: 44.0,
-                                                  height: 44.0,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            );
-                                          } else {
-                                            return Padding(
-                                              padding: const EdgeInsets.all(2.0),
-                                              child: Container(
-                                                width: 100.0,
-                                                height: 100.0,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryBackground,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                alignment: const AlignmentDirectional(
-                                                    0.0, 0.0),
-                                                child: Text(
-                                                  valueOrDefault<String>(
-                                                    conditionalBuilderUsersRecord
-                                                        .displayName,
-                                                    'A',
-                                                  ).maybeHandleOverflow(
-                                                      maxChars: 1),
-                                                  textAlign: TextAlign.center,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Plus Jakarta Sans',
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
-                                              ),
-                                            );
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  valueOrDefault<String>(
-                                    conditionalBuilderUsersRecord.collegeName,
-                                    'College Group',
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyLarge
-                                      .override(
-                                        fontFamily: 'Plus Jakarta Sans',
-                                        letterSpacing: 0.0,
-                                      ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
-                                  child: Text(
-                                    '${valueOrDefault<String>(
-                                      widget.chatRef?.users.length.toString(),
-                                      '2',
-                                    )} members',
-                                    style: FlutterFlowTheme.of(context)
-                                        .labelSmall
-                                        .override(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          letterSpacing: 0.0,
-                                        ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                        ],
-                      );
-                    }
-                  },
-                ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                valueOrDefault<String>(
+                                  conditionalBuilderUsersRecord.collegeName,
+                                  'College Group',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyLarge
+                                    .override(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      letterSpacing: 0.0,
+                                    ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 4.0, 0.0, 0.0),
+                                child: Text(
+                                  '${valueOrDefault<String>(
+                                    widget.chatRef?.users.length.toString(),
+                                    '2',
+                                  )} members',
+                                  style: FlutterFlowTheme.of(context)
+                                      .labelSmall
+                                      .override(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                },
               );
             },
           ),

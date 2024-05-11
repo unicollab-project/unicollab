@@ -898,7 +898,7 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
               Align(
                 alignment: const AlignmentDirectional(0.0, 1.0),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 20.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 80.0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       context.pushNamed('TaskPage');
