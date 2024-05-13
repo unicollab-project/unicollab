@@ -183,6 +183,18 @@ class _ChatThreadUpdateWidgetState extends State<ChatThreadUpdateWidget> {
                                             fontWeight: FontWeight.bold,
                                           ),
                                     )),
+                                    SelectionArea(
+                                        child: AutoSizeText(
+                                      otherUserUsersRecord.collegeName,
+                                      textAlign: TextAlign.start,
+                                      style: FlutterFlowTheme.of(context)
+                                          .labelSmall
+                                          .override(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    )),
                                     Text(
                                       valueOrDefault<String>(
                                         dateTimeFormat('relative',
