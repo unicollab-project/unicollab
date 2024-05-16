@@ -13,6 +13,7 @@ import 'schema/branch_record.dart';
 import 'schema/college_names_record.dart';
 import 'schema/chat_messages_record.dart';
 import 'schema/chats_record.dart';
+import 'schema/year_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -29,6 +30,7 @@ export 'schema/branch_record.dart';
 export 'schema/college_names_record.dart';
 export 'schema/chat_messages_record.dart';
 export 'schema/chats_record.dart';
+export 'schema/year_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -321,6 +323,43 @@ Future<List<ChatsRecord>> queryChatsRecordOnce({
     queryCollectionOnce(
       ChatsRecord.collection,
       ChatsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query YearRecords (as a Stream and as a Future).
+Future<int> queryYearRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      YearRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<YearRecord>> queryYearRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      YearRecord.collection,
+      YearRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<YearRecord>> queryYearRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      YearRecord.collection,
+      YearRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

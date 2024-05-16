@@ -396,6 +396,74 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 16.0),
+                              child: StreamBuilder<List<YearRecord>>(
+                                stream: queryYearRecord(
+                                  queryBuilder: (yearRecord) =>
+                                      yearRecord.orderBy('student_year'),
+                                ),
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 40.0,
+                                        height: 40.0,
+                                        child: SpinKitFoldingCube(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          size: 40.0,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  List<YearRecord> studentYearYearRecordList =
+                                      snapshot.data!;
+                                  return FlutterFlowDropDown<String>(
+                                    controller:
+                                        _model.studentYearValueController ??=
+                                            FormFieldController<String>(null),
+                                    options: studentYearYearRecordList
+                                        .map((e) => e.studentYear)
+                                        .toList(),
+                                    onChanged: (val) => setState(
+                                        () => _model.studentYearValue = val),
+                                    width: 300.0,
+                                    height: 56.0,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .override(
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    hintText: 'Select Year ...',
+                                    icon: Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      size: 24.0,
+                                    ),
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                    elevation: 2.0,
+                                    borderColor:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    borderWidth: 2.0,
+                                    borderRadius: 8.0,
+                                    margin: const EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 4.0, 16.0, 4.0),
+                                    hidesUnderline: true,
+                                    isOverButton: true,
+                                    isSearchable: false,
+                                    isMultiSelect: false,
+                                  );
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 16.0),
                               child: StreamBuilder<List<BranchRecord>>(
                                 stream: queryBranchRecord(),
                                 builder: (context, snapshot) {
@@ -570,7 +638,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                         collegeState: _model.stateNameValue,
                                         collegeCity: _model.cityNameValue,
                                         collegeName: _model.collegeNameValue,
-                                        branchName: _model.branchNameValue,
+                                        branchName: _model.studentYearValue,
                                         phoneNumber: _model
                                             .phoneNumberTextController.text,
                                         photoUrl:
@@ -581,7 +649,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                         queryBuilder: (chatsRecord) =>
                                             chatsRecord.where(
                                           'branch_name',
-                                          isEqualTo: _model.branchNameValue,
+                                          isEqualTo: _model.studentYearValue,
                                         ),
                                         singleRecord: true,
                                       ).then((s) => s.firstOrNull);
@@ -598,7 +666,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                             groupChatId:
                                                 random_data.randomInteger(
                                                     1000000, 9999999),
-                                            branchName: _model.branchNameValue,
+                                            branchName: _model.studentYearValue,
                                           ),
                                           ...mapToFirestore(
                                             {

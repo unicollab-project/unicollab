@@ -152,21 +152,45 @@ class _UserListSmallWidgetState extends State<UserListSmallWidget> {
                               fontWeight: FontWeight.bold,
                             ),
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                        child: Text(
-                          valueOrDefault<String>(
-                            widget.userRef?.role,
-                            '--',
-                          ),
-                          style:
-                              FlutterFlowTheme.of(context).bodySmall.override(
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 4.0, 0.0, 0.0),
+                            child: Text(
+                              valueOrDefault<String>(
+                                widget.userRef?.collegeName,
+                                '--',
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .override(
                                     fontFamily: 'Plus Jakarta Sans',
                                     color: FlutterFlowTheme.of(context).primary,
                                     letterSpacing: 0.0,
                                   ),
-                        ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                10.0, 4.0, 0.0, 0.0),
+                            child: Text(
+                              valueOrDefault<String>(
+                                widget.userRef?.studentYear,
+                                'xth year',
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    fontSize: 12.0,
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

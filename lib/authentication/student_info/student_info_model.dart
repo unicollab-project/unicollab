@@ -17,6 +17,9 @@ class StudentInfoModel extends FlutterFlowModel<StudentInfoWidget> {
   // State field(s) for collegeName widget.
   String? collegeNameValue;
   FormFieldController<String>? collegeNameValueController;
+  // State field(s) for studentYear widget.
+  String? studentYearValue;
+  FormFieldController<String>? studentYearValueController;
   // State field(s) for branchName widget.
   String? branchNameValue;
   FormFieldController<String>? branchNameValueController;

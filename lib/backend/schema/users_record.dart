@@ -70,10 +70,10 @@ class UsersRecord extends FirestoreRecord {
   String get branchName => _branchName ?? '';
   bool hasBranchName() => _branchName != null;
 
-  // "role" field.
-  String? _role;
-  String get role => _role ?? '';
-  bool hasRole() => _role != null;
+  // "student_year" field.
+  String? _studentYear;
+  String get studentYear => _studentYear ?? '';
+  bool hasStudentYear() => _studentYear != null;
 
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
@@ -87,7 +87,7 @@ class UsersRecord extends FirestoreRecord {
     _collegeCity = snapshotData['college_city'] as String?;
     _collegeName = snapshotData['college_name'] as String?;
     _branchName = snapshotData['branch_name'] as String?;
-    _role = snapshotData['role'] as String?;
+    _studentYear = snapshotData['student_year'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -135,7 +135,7 @@ Map<String, dynamic> createUsersRecordData({
   String? collegeCity,
   String? collegeName,
   String? branchName,
-  String? role,
+  String? studentYear,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -150,7 +150,7 @@ Map<String, dynamic> createUsersRecordData({
       'college_city': collegeCity,
       'college_name': collegeName,
       'branch_name': branchName,
-      'role': role,
+      'student_year': studentYear,
     }.withoutNulls,
   );
 
@@ -173,7 +173,7 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.collegeCity == e2?.collegeCity &&
         e1?.collegeName == e2?.collegeName &&
         e1?.branchName == e2?.branchName &&
-        e1?.role == e2?.role;
+        e1?.studentYear == e2?.studentYear;
   }
 
   @override
@@ -189,7 +189,7 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.collegeCity,
         e?.collegeName,
         e?.branchName,
-        e?.role
+        e?.studentYear
       ]);
 
   @override
