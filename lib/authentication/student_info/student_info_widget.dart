@@ -650,7 +650,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                         queryBuilder: (chatsRecord) =>
                                             chatsRecord.where(
                                           'branch_name',
-                                          isEqualTo: _model.studentYearValue,
+                                          isEqualTo: _model.branchNameValue,
                                         ),
                                         singleRecord: true,
                                       ).then((s) => s.firstOrNull);
@@ -667,7 +667,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                             groupChatId:
                                                 random_data.randomInteger(
                                                     1000000, 9999999),
-                                            branchName: _model.studentYearValue,
+                                            branchName: _model.branchNameValue,
                                           ),
                                           ...mapToFirestore(
                                             {
