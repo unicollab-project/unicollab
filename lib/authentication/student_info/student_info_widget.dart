@@ -643,6 +643,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                             .phoneNumberTextController.text,
                                         photoUrl:
                                             'https://e7.pngegg.com/pngimages/980/304/png-clipart-computer-icons-user-profile-avatar-heroes-silhouette-thumbnail.png',
+                                        studentYear: _model.studentYearValue,
                                       ));
                                       _model.foundGroup =
                                           await queryChatsRecordOnce(
