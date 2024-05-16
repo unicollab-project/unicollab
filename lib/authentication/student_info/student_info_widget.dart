@@ -654,9 +654,9 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                         ),
                                         singleRecord: true,
                                       ).then((s) => s.firstOrNull);
-                                      if (_model.foundGroup?.branchName !=
-                                              null &&
-                                          _model.foundGroup?.branchName != '') {
+                                      if (_model.foundGroup?.branchName ==
+                                              null ||
+                                          _model.foundGroup?.branchName == '') {
                                         await ChatsRecord.collection.doc().set({
                                           ...createChatsRecordData(
                                             userA: buttonUsersRecord.reference,
