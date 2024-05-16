@@ -638,7 +638,7 @@ class _StudentInfoWidgetState extends State<StudentInfoWidget>
                                         collegeState: _model.stateNameValue,
                                         collegeCity: _model.cityNameValue,
                                         collegeName: _model.collegeNameValue,
-                                        branchName: _model.studentYearValue,
+                                        branchName: _model.branchNameValue,
                                         phoneNumber: _model
                                             .phoneNumberTextController.text,
                                         photoUrl:
