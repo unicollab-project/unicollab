@@ -1,7 +1,8 @@
-# Unicollab-freelance
+# Unicollab
 
-A new Flutter project.
+A new Flutter project which helps university students to share resources with peers.
 
 ## Getting Started
 
-FlutterFlow projects are built to run on the Flutter _stable_ release.
+- Clone the repository and run ```flutter pub get``` (Ensure that you have flutter installed).
+- Run the command ```flutter run```
