@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'chat_details_overlay_model.dart';
 export 'chat_details_overlay_model.dart';
 
@@ -172,10 +173,42 @@ class _ChatDetailsOverlayWidgetState extends State<ChatDetailsOverlayWidget> {
                                   const SizedBox(height: 8.0),
                               itemBuilder: (context, chatUsersIndex) {
                                 final chatUsersItem = chatUsers[chatUsersIndex];
-                                return UserListSmallWidget(
-                                  key: Key(
-                                      'Keyo7w_${chatUsersIndex}_of_${chatUsers.length}'),
-                                  action: () async {},
+                                return StreamBuilder<UsersRecord>(
+                                  stream:
+                                      UsersRecord.getDocument(chatUsersItem),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 40.0,
+                                          height: 40.0,
+                                          child: SpinKitFoldingCube(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            size: 40.0,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    final userListSmallUsersRecord =
+                                        snapshot.data!;
+                                    return wrapWithModel(
+                                      model:
+                                          _model.userListSmallModels.getModel(
+                                        chatUsersItem.id,
+                                        chatUsersIndex,
+                                      ),
+                                      updateCallback: () => setState(() {}),
+                                      child: UserListSmallWidget(
+                                        key: Key(
+                                          'Keyo7w_${chatUsersItem.id}',
+                                        ),
+                                        userRef: userListSmallUsersRecord,
+                                        action: () async {},
+                                      ),
+                                    );
+                                  },
                                 );
                               },
                             );
