@@ -183,6 +183,21 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
+                if (_model.uploadedFileUrl1 != '')
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Image.network(
+                          'https://techterms.com/img/lg/pdf_109.png',
+                          width: 100.0,
+                          height: 100.0,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ],
+                  ),
                 if (_model.uploadedFileUrl2 != '')
                   Row(
                     mainAxisSize: MainAxisSize.max,
