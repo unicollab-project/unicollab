@@ -5,7 +5,6 @@ import '/chat_groupwbubbles/chat_thread_update/chat_thread_update_widget.dart';
 import '/chat_groupwbubbles/empty_state_simple/empty_state_simple_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_media_display.dart';
-import '/flutter_flow/flutter_flow_pdf_viewer.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
@@ -270,16 +269,6 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                       ),
                     ],
                   ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    FlutterFlowPdfViewer(
-                      networkPath: _model.uploadedFileUrl1,
-                      height: 300.0,
-                      horizontalScroll: false,
-                    ),
-                  ],
-                ),
                 Form(
                   key: _model.formKey,
                   autovalidateMode: AutovalidateMode.disabled,
